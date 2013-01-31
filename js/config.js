@@ -188,10 +188,9 @@ dojo.declare("js.Config", null, {
               HasRendererImage:false,
               ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
               FieldNames:[
-                  {Field: "Zone Class: ${ZONECLASS}"},
-                  {Field: "Zone Description: ${ZONEDESC}"},
-                  {Field: "Last Updated: ${LASTUPDATE}"},
-                  {Field: "Zone Class: ${ZONECLASS}"},
+                  {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
+                  {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}"},
                   { Links:
                       [
                           { DisplayText: "Website", FieldName: "HYPERLINK", type: "web" }
@@ -209,9 +208,9 @@ dojo.declare("js.Config", null, {
               HasRendererImage:false,
               ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
               FieldNames:[
-                  {Field: "Zone Class: ${ZONECLASS}"},
-                  {Field: "Zone Description: ${ZONEDESC}"},
-                  {Field: "Last Updated: ${LASTUPDATE}"},
+                  {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
+                  {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}"},
                   { Links:
                       [
                           { DisplayText: "Website", FieldName: "HYPERLINK", type: "web"},
@@ -222,27 +221,41 @@ dojo.declare("js.Config", null, {
            isRendererColor: true,
            LayerVisibility: true
           },
-          Parcel:{
-              Name: "Parcels",
-              Image:"images/landuse.png",
+          ParcelInfo:{
+              Name: "Parcel Info",
+              Image:"images/taxparcel.png",
               HasRendererImage:false,
               ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
               FieldNames:[
 
-                  {Field: "Parcel ID: ${PARCELID}"},
-                  {Field: "Tax Bill ID: ${TAXBILLID}"},
-                  {Field: "Assessed Value: ${CNTASSDVAL}"},
-                  {Field: "Site Address: ${SITEADDRESS}"},
-                  {Field: "Square: ${SQUARE}"},
-                  {Field: "Lot: ${LOT}"},
-                  {Field: "Owner: ${OWNERNME1}"},
-                  {Field: "Postal Address: ${PSTLADDRESS}"}
+                  {Field: "<b>Parcel ID:</b> ${PARCELID}"},
+                  {Field: "<b>Tax Bill ID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_alsearch.php?BEGIN=0&searchType=tax_bill&tax_bill+Value=Submit+Query&INPUT=${TAXBILLID}'> ${TAXBILLID}</a>"},
+                  {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}"},
+                  {Field: "<b>Site Address:</b> ${SITEADDRESS}"},
+                  {Field: "<b>Square:</b> ${SQUARE}"},
+                  {Field: "<b>Lot:</b> ${LOT}"}
               ],
            Color: "#FCD208",
            isRendererColor: true,
            LayerVisibility: true
+          },
+          ParcelOwnerInfo:{
+              Name: "Owner Info",
+              Image:"images/taxparcel.png",
+              HasRendererImage:false,
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+              FieldNames:[
+                  {Field: "<b>Owner:</b> ${OWNERNME1}"},
+                  {Field: "<b>Postal Address:</b> ${PSTLADDRESS}"},
+                  {Field: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                      "&nbsp;&nbsp;&nbsp;&nbsp; ${PSTLCITY}, ${PSTLSTATE} ${PSTLZIP5}"}
+              ],
+              Color: "#FCD208",
+              isRendererColor: true,
+              LayerVisibility: true
           }
-
       },
 
     //Set required zoom level.
