@@ -32,6 +32,10 @@ dojo.require("js.Config");
 dojo.require("js.date");
 dojo.require("js.InfoWindow");
 
+dojo.require("esri.dijit.Legend");
+//dojo.require("esri.arcgis.utils");
+//dojo.require("dijit.form.CheckBox");
+
 /*Global variables*/
 var baseMapLayers;  //Variable for storing base map layers
 var fontSize; //variable for storing font sizes for all devices.
@@ -57,6 +61,10 @@ var tempGraphicsLayerId = 'tempGraphicsLayerID';  //variable to store graphics l
 
 var services; //variable to store services from the config file
 var numberOfServices = 0;
+//CFRICKE
+var layersCounter = 0; //variable to store counter for layers
+var tempLayerId = "tempLayerID";
+
 
 var zoomLevel;
 
@@ -170,6 +178,7 @@ function Initialize(responseObject) {
         dojo.byId("divLogo").style.display = "none";
         dojo.byId("lblAppName").style.display = "none";
         dojo.byId("lblAppName").style.width = "80%";
+        dojo.byId("tblLayers").style.display = "none";
     }
     else {
         var imgBasemap = dojo.create('img');
@@ -188,6 +197,8 @@ function Initialize(responseObject) {
         dojo.byId('divAddressContainer').style.display = "block";
         dojo.byId("divLogo").style.display = "block";
     }
+    //Cfricke Add layers
+    layers = responseObject.Layers;
 
     infoBoxWidth = responseObject.InfoBoxWidth;
     dojo.byId('imgApp').src = responseObject.ApplicationIcon;
@@ -328,6 +339,14 @@ function MapInitFunction() {
             selectedGraphic = null;
             CreateCarousel();
             GetServices(evt);
+            //CFRICKE - From Tax Parcel Viewer
+            var checked = dojo.query('img[state = "check"]', dojo.byId('divLayers'));
+            if (!draw) {
+                if (checked.length == 0) {
+                    LocateParcel(null, evt.mapPoint)
+                    return;
+                }
+            }
         });
     }
 
@@ -342,6 +361,50 @@ function MapInitFunction() {
             }
             map.addLayer(featureLayer);
             featureLayer.hide();
+        }
+    }
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].isDynamicMapService) {
+            var lastindex = layers[i].ServiceURL.lastIndexOf('/');
+            map.addLayer(CreateDynamicServiceLayer(layers[i].ServiceURL, layers[i].ServiceURL.substr(lastindex + 1), layers[i].Key, layers[i].isVisible, layers[i].Title));
+        }
+        else {
+            var featureLayer = new esri.layers.FeatureLayer(layers[i].ServiceURL, {
+                mode: esri.layers.FeatureLayer.MODE_SELECTION,
+                outFields: ["*"],
+                id: layers[i].Key,
+                displayOnPan: false
+            });
+
+            dojo.connect(map, "onExtentChange", function (evt) {
+                mapScale = map.getLayer(baseMapLayers[0].Key).tileInfo.lods[map.getLevel()].scale;
+                if (!isOrientationChanged) {
+                    if (selectedGraphic) {
+                        var screenPoint = map.toScreen(selectedGraphic);
+                        screenPoint.y = map.height - screenPoint.y;
+                        map.infoWindow.setLocation(screenPoint);
+                        return;
+                    }
+                }
+                dojo.byId("divShareContainer").setAttribute("mapScale", mapScale);
+                if (dojo.coords("divShareContainer").h > 0) {
+                    ShareLink(false);
+                }
+            });
+
+            if (layers[i].UseColor) {
+                var customLFillSymbol = new esri.symbol.SimpleFillSymbol();
+                var customFillColor = new dojo.Color(layers[i].Color);
+                customFillColor.a = Number(layers[i].Alpha);
+                customLFillSymbol.setColor(customFillColor);
+                var customRenderer = new esri.renderer.SimpleRenderer(customLFillSymbol);
+                featureLayer.setRenderer(customRenderer);
+
+            }
+            map.addLayer(featureLayer);
+
+
+            FixTabWidth();
         }
     }
 }

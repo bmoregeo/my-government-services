@@ -115,6 +115,10 @@
                                 <img alt="Settings" src="images/imgGeolocation.png" class="imgOptions" title="Locate"
                                     onclick="ShowMyLocation();" style="cursor: pointer" />
                             </td>
+                            <!--<td align="center" id="Td1" class="tdHeader">
+                                <img alt="Legend" src="images/locate.png" class="imgOptions" title="Legend"
+                                     onclick="showLegendContainer()" style="cursor: pointer" />
+                            </td>-->
                             <td align="center" id="tdBaseMap">
                             </td>
                             <td align="center" class="tdHeader">
@@ -130,6 +134,7 @@
             </tr>
         </table>
     </div>
+
     <div id="divAddressContainer" align="center" class="divAddressContainer hideContainerHeight"
         style="display: none">
         <table style="width: 100%; height: 100%;">
@@ -175,11 +180,35 @@
             </tr>
         </table>
     </div>
+
+
     <div id="divLayerContainer" class="divLayerContainer hideContainerHeight">
         <div id="divLayerHolder" class="divLayerHolder">
-            <div id="divLayerContentHolder" class="divLayerContentHolder">
-                <div id="layerList">
-                </div>
+            <div id="divLayerContentHolder" class="divLayerContentHolder" style="height: 100%;">
+                <table>
+                    <tr>
+                        <td align="center">
+                            <div id="layerList" class="layerList">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="divLayers" class="divLayers">
+                                <table id="tblLayers" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 50px;">
+                                            Layers
+                                        </td>
+                                        <td>
+                                            <hr />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

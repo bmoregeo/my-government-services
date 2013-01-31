@@ -218,7 +218,47 @@ function ResizeHandler() {
         FixBottomPanelWidth();
     }
 }
+// CFRICKE
+// function to pop down the legend menu
+function showLegendContainer(){
+    if (dojo.coords("divLayerContainer").h > 0) {
+        dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divLayerContainer').style.height = '0px';
+    }
+    if (!isMobileDevice) {
+        if (dojo.coords("divAddressHolder").h > 0) {
+            dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
+            dojo.byId('divAddressHolder').style.height = '0px';
+        }
+    }
+    var cellHeight = (isMobileDevice || isTablet) ? 81 : 60;
+    if (dojo.coords("divLegendContainer").h > 0) {
+        dojo.replaceClass("divLegendContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divLegendContainer').style.height = '0px';
+    }
+    else {
+        //dojo.byId('divLegendContainer').style.height = cellHeight + "px";
+        console.log(dojo.byId('divLegendContentHolder').style.height);
+        if (dojo.byId('divLegendContentHolder').style.height > 200){
+            dojo.byId('divLegendContainer').style.height = "200px";
+        }
+        else{
+            dojo.byId('divLegendContainer').style.height = "50%";
+        }
+        dojo.replaceClass("divLegendContainer", "showContainerHeight", "hideContainerHeight");
 
+    }
+    console.log("SLIDERPRE");
+    SetHeightLegendResults();
+    console.log("SLIDERPOST");
+}
+function SetHeightLegendResults() {
+    //var height = (isMobileDevice) ? (dojo.window.getBox().h - 50) : dojo.coords(dojo.byId('divLegendContentHolder')).h;
+    //if (height > 0) {
+    //    dojo.byId('divLegendScrollContent').style.height = (height - ((!isTablet) ? 100 : 120)) + "px";
+    //}
+    CreateScrollbar(dojo.byId("divLegendContainer"), dojo.byId("divLegendHolder"));
+}
 //function to show address container
 function ShowLocateContainer() {
     dojo.byId('txtAddress').blur();
@@ -385,6 +425,7 @@ function HideProgressIndicator() {
 }
 
 function CreateScrollbar(container, content) {
+    console.log('Create SB');
     var yMax;
     var pxLeft, pxTop, xCoord, yCoord;
     var scrollbar_track;
@@ -781,3 +822,131 @@ function HideInformationContainer() {
 }
 
 
+//function to create checkbox
+function CreateCheckBox(layerId, chkBoxValue, isChecked) {
+    var cb = document.createElement("img");
+    cb.id = "chk" + layerId;
+    if (isMobileDevice) {
+        cb.style.width = "44px";
+        cb.style.height = "44px";
+    }
+    else {
+        cb.style.width = "20px";
+        cb.style.height = "20px";
+    }
+    if (isChecked) {
+        cb.src = "images/checked.png";
+        cb.setAttribute("state", "check");
+    }
+    else {
+        cb.src = "images/unchecked.png";
+        cb.setAttribute("state", "uncheck");
+    }
+    cb.setAttribute("value", chkBoxValue);
+    cb.setAttribute("layerId", layerId);
+    return cb;
+}
+
+//function for creating a dynamic layer and adding those values to a div container
+function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, displayName) {
+    var imageParams = new esri.layers.ImageParameters();
+    var lastindex = layerURL.lastIndexOf('/');
+    imageParams.layerIds = [layerIndex];
+    imageParams.layerOption = esri.layers.ImageParameters.LAYER_OPTION_SHOW;
+    var dynamicLayer = layerURL.substring(0, lastindex);
+    var dynamicMapService = new esri.layers.ArcGISDynamicMapServiceLayer(dynamicLayer, {
+        id: layerId,
+        imageParameters: imageParams,
+        visible: isVisible
+    });
+
+    dojo.io.script.get({
+        url: layerURL + '?f=json',
+        preventCache: true,
+        callbackParamName: "callback",
+        timeout: 10000,
+        load: function (data) {
+            layersCounter++;
+            if (layersCounter == layers.length) {
+                HideProgressIndicator();
+            }
+            var table = document.createElement("table");
+            var tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            var tr = document.createElement("tr");
+            tbody.appendChild(tr);
+
+            var td = document.createElement("td");
+
+            var checkbox = CreateCheckBox(layerId, layerIndex, isVisible);
+
+            checkbox.onclick = function () {
+                if (this.getAttribute("state") == "check") {
+                    this.src = "images/unchecked.png";
+                    this.setAttribute("state", "uncheck");
+                    dynamicMapService.hide();
+                    map.infoWindow.hide();
+                }
+                else {
+                    this.src = "images/checked.png";
+                    this.setAttribute("state", "check");
+                    ShowProgressIndicator();
+                    dynamicMapService.show();
+                    map.infoWindow.hide();
+                    selectedGraphic = null;
+                    //map.getLayer(tempLayerId).clear();
+                    //map.getLayer(tempParcelLayerId).clear();
+                }
+                HideProgressIndicator();
+            };
+
+
+            td.appendChild(checkbox);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            var img = document.createElement("img");
+            try{
+                img.src = layerURL + '/images/' + data.drawingInfo.renderer.symbol.url;
+            }
+            catch(err){
+                console.log(err);
+                img.src = "";
+            }
+
+            if (isMobileDevice) {
+                img.style.width = "44px";
+                img.style.height = "44px";
+            }
+            else {
+                img.style.width = "20px";
+                img.style.height = "20px";
+            }
+            td.appendChild(img);
+
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td.appendChild(document.createTextNode(displayName));
+
+            tr.appendChild(td);
+
+            dojo.byId('divLayers').appendChild(table);
+        },
+        error: function (error) {
+            layersCounter++;
+            if (layersCounter == layers.length) {
+                HideProgressIndicator();
+            }
+        }
+    });
+    return dynamicMapService;
+}
+
+//function to get layerinfo based on key
+function GetLayerInfo(key) {
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].Key == key)
+            return i;
+    }
+}

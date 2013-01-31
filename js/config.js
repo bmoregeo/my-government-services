@@ -295,5 +295,56 @@ dojo.declare("js.Config", null, {
               FacebookShareURL: "http://www.facebook.com/sharer.php?u=${0}&t=My%20Government%20Services",
               TwitterShareURL: "http://twitter.com/home/?status=My%20Government%20Services ${0}",
               ShareByMailLink: "mailto:%20?subject=Checkout%20this%20map!&body=${0}"
-          }
+          },
+
+    Layers:
+        [
+            {
+                Key: "taxparcels",
+                Title: "Tax Parcels",
+                ServiceURL: "http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+                isVisible: false,
+                isDynamicMapService: true,
+                Fields:
+                    [
+                        {
+                            DisplayText: "Parcel ID:",
+                            FieldName: "${PARCELID}",
+                            DataType: "string"
+                        }
+
+                    ]
+            },{
+            Key: "zoning",
+            Title: "Zoning",
+            ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
+            isVisible: false,
+            isDynamicMapService: true,
+            Fields:
+                [
+                    {
+                        DisplayText: "Zoning Description:",
+                        FieldName: "${ZONEDESC}",
+                        DataType: "string"
+                    }
+
+                ]
+        },{
+            Key: "conditionalUse",
+            Title: "Conditional use",
+            ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
+            isVisible: false,
+            isDynamicMapService: true,
+            Fields:
+                [
+                    {
+                        DisplayText: "Zoning Description:",
+                        FieldName: "${ZONEDESC}",
+                        DataType: "string"
+                    }
+
+                ]
+        }
+
+    ]
 });
