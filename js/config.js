@@ -56,10 +56,10 @@ dojo.declare("js.Config", null, {
     // GENERAL SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set application title.
-    ApplicationName: "My Government Services",
+    ApplicationName: "Planning Viewer",
 
     // Set application icon path.
-    ApplicationIcon: "images/appIcon.png",
+    ApplicationIcon: "images/landuse.png",
 
     // Set splash window content - Message that appears when the application starts.
     SplashScreenMessage: "<b>Welcome to My Government Services</b><br/><hr/><br/>The <b>My Government Services</b> application helps residents locate a government facility and obtain information about curbside and dropoff services provided by a government agency.<br/> <br/>To locate a service, simply enter an address or activity in the search box, or use your current location.  Your location will then be highlighted on the map and relevant information about available curbside and dropoff services will be presented to the user.<br/><br/>",
@@ -72,24 +72,13 @@ dojo.declare("js.Config", null, {
     // ------------------------------------------------------------------------------------------------------------------------
     // Set baseMap layers.
     // Please note: All base maps need to use the same spatial reference. By default, on application start the first base map will be loaded
-    BaseMapLayers:
-          [
-                    {
-                        Key: "parcelMap",
-                        ThumbnailSource: "images/parcelMap.png",
-                        Name: "Streets",
-                        MapURL: "http://localgovtemplates.esri.com/ArcGIS/rest/services/ParcelPublicAccess/MapServer"
-                    },
-                    {
-                        Key: "hybridMap",
-                        ThumbnailSource: "images/imageryHybrid.png",
-                        Name: "Imagery",
-                        MapURL: "http://localgovtemplates.esri.com/ArcGIS/rest/services/ImageryHybrid/MapServer"
-                    }
-          ],
+    'BaseMapLayers':[
+        {"Key":"publicAccess", "ThumbnailSource":"images/imgPublicAccess.png", "Name":"Public Access", MapURL:"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"},
+        {"Key":"imageryHybrid", "ThumbnailSource":"images/imgImageryHybrid.png", "Name":"Imagery", MapURL:"http://gis.nola.gov:6080/arcgis/rest/services/Basemaps/Aerials2012/MapServer"}
+    ],
 
     // Initial map extent. Use comma (,) to separate values and dont delete the last comma.
-    DefaultExtent: "-9817810,5124390,-9808630,5128700",
+    'DefaultExtent':"-10042700, 3492300, -10015200, 3502900",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // INFO-POPUP SETTINGS
@@ -145,19 +134,19 @@ dojo.declare("js.Config", null, {
     // ADDRESS SEARCH SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set Locator service URL.
-    LocatorURL: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Locators/TA_Address_NA_10/GeocodeServer",
+    LocatorURL: "http://gis.nola.gov/arcgis/rest/services/Composite/GeocodeServer",
 
     //Set locator name fields to search.
     LocatorNameFields: [{
         FieldName: 'Loc_name',
-        FieldValues: ["US_RoofTop", "US_StreetName"]
+        FieldValues: ["RoadCenterline", "SiteAddressPoint","TaxParcel"]
     }],
 
     // Set Locator fields (fields to be used for searching).
     LocatorFields: "SingleLine",
 
     // Set default address to search.
-    LocatorDefaultAddress: "971 Sylvan Cir Naperville IL 60540",
+    LocatorDefaultAddress: "",
 
     // Set pushpin image path.
     LocatorMarkupSymbolPath: "images/RedPushpin.png",
@@ -169,7 +158,7 @@ dojo.declare("js.Config", null, {
     // GEOMETRY SERVICE SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set geometry service URL.
-    GeometryService: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+    GeometryService: "http://gis.nola.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
 
     // ------------------------------------------------------------------------------------------------------------------------
     // DRIVING DIRECTIONS SETTINGS
@@ -192,212 +181,72 @@ dojo.declare("js.Config", null, {
     //Operational layer collection.
     Services:
       {
-          TrashPickup:
-                 {
-                     Name: "Trash Pickup",
-                     Image: "images/trash.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/5",
-                     FieldNames: [
-                                    { ServiceAvailability:
-                                                          [
-                                                             { FieldName: "MONDAY", DisplayText: "Mon" },
-                                                             { FieldName: "TUESDAY", DisplayText: "Tue" },
-                                                             { FieldName: "WEDNESDAY", DisplayText: "Wed" },
-                                                             { FieldName: "THURSDAY", DisplayText: "Thu" },
-                                                             { FieldName: "FRIDAY", DisplayText: "Fri" },
-                                                             { FieldName: "SATURDAY", DisplayText: "Sat" },
-                                                             { FieldName: "SUNDAY", DisplayText: "Sun" }
-                                                          ]
-                                    },
-                                    { Field: "Agency: ${AGENCY}" },
-                                    { Field: "Contact: ${CONTACT}" },
-                                    { Field: "Phone: ${PHONE}" },
-                                    { Links:
-                                                           [
-                                                              { DisplayText: "Website", FieldName: "AGENCYURL" },
-                                                              { DisplayText: "Email", FieldName: "EMAIL" }
-                                                           ]
-                                    }
 
-                                  ],
+          ConditionalUse:{
+              Name: "Conditional Use",
+              Image:"images/landuse.png",
+              HasRendererImage:false,
+              ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
+              FieldNames:[
+                  {Field: "Zone Class: ${ZONECLASS}"},
+                  {Field: "Zone Description: ${ZONEDESC}"},
+                  {Field: "Last Updated: ${LASTUPDATE}"},
+                  {Field: "Zone Class: ${ZONECLASS}"},
+                  { Links:
+                      [
+                          { DisplayText: "Website", FieldName: "HYPERLINK", type: "web" }
+                      ]
+                  }
+             ],
+              Color: "#FCD208",
+              isRendererColor: true,
+              LayerVisibility: true
+          },
 
-                     Color: "#FCD208",
-                     isRendererColor: true,
-                     LayerVisibility: true
-                 },
-          RecyclingPickup:
-                 {
-                     Name: "Recycling Pickup",
-                     Image: "images/recycling.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/6",
-                     FieldNames: [
-                                    { ServiceAvailability:
-                                                         [
-                                                             { FieldName: "MONDAY", DisplayText: "Mon" },
-                                                             { FieldName: "TUESDAY", DisplayText: "Tue" },
-                                                             { FieldName: "WEDNESDAY", DisplayText: "Wed" },
-                                                             { FieldName: "THURSDAY", DisplayText: "Thu" },
-                                                             { FieldName: "FRIDAY", DisplayText: "Fri" },
-                                                             { FieldName: "SATURDAY", DisplayText: "Sat" },
-                                                             { FieldName: "SUNDAY", DisplayText: "Sun" }
-                                                          ]
-                                    },
-                                    { Field: "Agency: ${AGENCY}" },
-                                    { Field: "Contact: ${CONTACT}" },
-                                    { Field: "Phone: ${PHONE}" },
-                                    { Links:
-                                                           [
-                                                              { DisplayText: "Website", FieldName: "AGENCYURL", type: "web" },
-                                                              { DisplayText: "Email", FieldName: "EMAIL", type: "mail" }
-                                                           ]
-                                    }
-                                 ],
-                     Color: "#0000FF",
-                     isRendererColor: true,
-                     LayerVisibility: true
-                 },
-          YardWastePickup:
-                 {
-                     Name: "Yard Waste Pickup",
-                     Image: "images/yardWaste.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/8",
-                     FieldNames: [
-                                   { ServiceAvailability:
-                                                          [
-                                                             { FieldName: "MONDAY", DisplayText: "Mon" },
-                                                             { FieldName: "TUESDAY", DisplayText: "Tue" },
-                                                             { FieldName: "WEDNESDAY", DisplayText: "Wed" },
-                                                             { FieldName: "THURSDAY", DisplayText: "Thu" },
-                                                             { FieldName: "FRIDAY", DisplayText: "Fri" },
-                                                             { FieldName: "SATURDAY", DisplayText: "Sat" },
-                                                             { FieldName: "SUNDAY", DisplayText: "Sun" }
-                                                          ]
-                                   },
-                                    { Field: "Agency: ${AGENCY}" },
-                                    { Field: "Contact: ${CONTACT}" },
-                                    { Field: "Phone: ${PHONE}" },
-                                    { Links:
-                                                           [
-                                                              { DisplayText: "Website", FieldName: "AGENCYURL" },
-                                                              { DisplayText: "Email", FieldName: "EMAIL" }
-                                                           ]
-                                    }
-                                 ],
-                     Color: "#250517",
-                     isRendererColor: true,
-                     LayerVisibility: true
-                 },
-          StreetCleaning:
-                 {
-                     Name: "Street Cleaning",
-                     Image: "images/streetCleaning.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/7",
-                     FieldNames: [
-                                    { ServiceAvailability:
-                                                          [
-                                                             { FieldName: "WEEKONE", DisplayText: "Week 1" },
-                                                             { FieldName: "WEEKTWO", DisplayText: "Week 2" },
-                                                             { FieldName: "WEEKTHREE", DisplayText: "Week 3" },
-                                                             { FieldName: "WEEKFOUR", DisplayText: "Week 4" }
-                                                           ]
-                                    },
-                                    { Field: "Agency: ${AGENCY}" },
-                                    { Field: "Contact: ${CONTACT}" },
-                                    { Field: "Phone: ${PHONE}" },
-                                     { Links:
-                                                           [
-                                                              { DisplayText: "Website", FieldName: "AGENCYURL" },
-                                                              { DisplayText: "Email", FieldName: "EMAIL" }
-                                                           ]
-                                     }
-                                 ],
-                     Color: "#00FF00",
-                     isRendererColor: true,
-                     LayerVisibility: true
-                 },
-          Libraries:
-                 {
-                     Name: "Libraries",
-                     Image: "images/library.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/4",
-                     distance: 4,
-                     FieldNames: [
-                                    { FieldName: "FacilitySitePoint.NAME" },
-                                    { FieldName: "FacilitySitePoint.FULLADDR" },
-                                    { FieldName: "GovServiceInfo.PHONE" }
-                                 ],
-                     LayerVisibility: true,
-                     ShowBeyondBuffer: true
-                 },
-          PostOffices:
-                 {
-                     Name: "Post Offices",
-                     Image: "images/postOffice.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/3",
-                     distance: 4,
-                     FieldNames: [
-                                    { FieldName: "FacilitySitePoint.NAME" },
-                                    { FieldName: "FacilitySitePoint.FULLADDR" },
-                                    { FieldName: "GovServiceInfo.PHONE" }
-                                 ],
-                     LayerVisibility: true,
-                     ShowBeyondBuffer: true
-                 },
-          PoliceStations:
-                 {
-                     Name: "Police Stations",
-                     Image: "images/policeStations.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/1",
-                     distance: 4,
-                     FieldNames: [
-                                    { FieldName: "FacilitySitePoint.NAME" },
-                                    { FieldName: "FacilitySitePoint.FULLADDR" },
-                                    { FieldName: "GovServiceInfo.PHONE" }
-                                 ],
-                     LayerVisibility: true,
-                     ShowBeyondBuffer: true
-                 },
-          FireStations:
-                 {
-                     Name: "Fire Stations",
-                     Image: "images/fireStations.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/2",
-                     distance: 4,
-                     FieldNames: [
-                                    { FieldName: "FacilitySitePoint.NAME" },
-                                    { FieldName: "FacilitySitePoint.FULLADDR" },
-                                    { FieldName: "GovServiceInfo.PHONE" }
-                  ],
-                     LayerVisibility: true,
-                     ShowBeyondBuffer: true
-                 },
-          Hospitals:
-                 {
-                     Name: "Hospitals",
-                     Image: "images/hospital.png",
-                     HasRendererImage: false,
-                     ServiceUrl: "http://arcgis-tenone2012-1974758903.us-west-1.elb.amazonaws.com/arcgis/rest/services/GovernmentServices/MapServer/0",
-                     distance: 4,
-                     FieldNames: [
-                                    { FieldName: "FacilitySitePoint.NAME" },
-                                    { FieldName: "FacilitySitePoint.FULLADDR" },
-                                    { FieldName: "GovServiceInfo.PHONE" }
-                   ],
-                     LayerVisibility: true,
-                     ShowBeyondBuffer: true
-                 }
+          Zoning:{
+              Name: "Zoning",
+              Image:"images/landuse.png",
+              HasRendererImage:false,
+              ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
+              FieldNames:[
+                  {Field: "Zone Class: ${ZONECLASS}"},
+                  {Field: "Zone Description: ${ZONEDESC}"},
+                  {Field: "Last Updated: ${LASTUPDATE}"},
+                  { Links:
+                      [
+                          { DisplayText: "Website", FieldName: "HYPERLINK", type: "web"},
+                      ]
+                  }
+              ],
+           Color: "#FCD208",
+           isRendererColor: true,
+           LayerVisibility: true
+          },
+          Parcel:{
+              Name: "Parcels",
+              Image:"images/landuse.png",
+              HasRendererImage:false,
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+              FieldNames:[
+
+                  {Field: "Parcel ID: ${PARCELID}"},
+                  {Field: "Tax Bill ID: ${TAXBILLID}"},
+                  {Field: "Assessed Value: ${CNTASSDVAL}"},
+                  {Field: "Site Address: ${SITEADDRESS}"},
+                  {Field: "Square: ${SQUARE}"},
+                  {Field: "Lot: ${LOT}"},
+                  {Field: "Owner: ${OWNERNME1}"},
+                  {Field: "Postal Address: ${PSTLADDRESS}"}
+              ],
+           Color: "#FCD208",
+           isRendererColor: true,
+           LayerVisibility: true
+          }
+
       },
 
     //Set required zoom level.
-    ZoomLevel: 6,
+    ZoomLevel: 15,
 
     //Address to be displayed on mobile callout.
     CallOutAddress: "Street: ${Address}",
