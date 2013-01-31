@@ -227,18 +227,31 @@ dojo.declare("js.Config", null, {
               HasRendererImage:false,
               ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
               FieldNames:[
-
                   {Field: "<b>Parcel ID:</b> ${PARCELID}"},
-                  {Field: "<b>Tax Bill ID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_alsearch.php?BEGIN=0&searchType=tax_bill&tax_bill+Value=Submit+Query&INPUT=${TAXBILLID}'> ${TAXBILLID}</a>"},
-                  {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}"},
                   {Field: "<b>Site Address:</b> ${SITEADDRESS}"},
                   {Field: "<b>Square:</b> ${SQUARE}"},
-                  {Field: "<b>Lot:</b> ${LOT}"}
+                  {Field: "<b>Lot:</b> ${LOT}"},
+                  {Field: "<b>Description:</b> ${PRPRTYDSCRP}"}
+
               ],
            Color: "#FCD208",
            isRendererColor: true,
            LayerVisibility: true
           },
+          ParcelAssessorInfo:{
+          Name: "Assessor Info",
+          Image:"images/taxparcel.png",
+          HasRendererImage:false,
+          ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+          FieldNames:[
+              {Field: "<b>Tax Bill ID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_alsearch.php?BEGIN=0&searchType=tax_bill&tax_bill+Value=Submit+Query&INPUT=${TAXBILLID}'> ${TAXBILLID}</a>"},
+              {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}"},
+              {Field: "<b>Land Value:</b> ${LNDVALUE}"}
+          ],
+          Color: "#FCD208",
+          isRendererColor: true,
+          LayerVisibility: true
+      },
           ParcelOwnerInfo:{
               Name: "Owner Info",
               Image:"images/taxparcel.png",
