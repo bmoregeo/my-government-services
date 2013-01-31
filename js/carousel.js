@@ -540,9 +540,17 @@ function CreateServicePolygonInfo(service, feature, key) {
         }
 
         else {
+
+            //service.FieldNames[i].Field]
             var tdDisplayText = dojo.create("td");
             tr.appendChild(tdDisplayText);
-            tdDisplayText.innerHTML = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+            try{
+                var attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+            }
+            catch(err){
+                var attribute_switch = "";
+            }
+            tdDisplayText.innerHTML = attribute_switch
         }
     }
     dojo.byId("divContent" + key).appendChild(tableInfo);
