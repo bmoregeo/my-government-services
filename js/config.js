@@ -73,7 +73,7 @@ dojo.declare("js.Config", null, {
     // Set baseMap layers.
     // Please note: All base maps need to use the same spatial reference. By default, on application start the first base map will be loaded
     'BaseMapLayers':[
-        {"Key":"publicAccess", "ThumbnailSource":"images/imgPublicAccess.png", "Name":"Public Access", MapURL:"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"},
+        {"Key":"publicAccess", "ThumbnailSource":"images/imgPublicAccess.png", "Name":"Public Access", MapURL:"http://gis.nola.gov/arcgis/rest/services/Basemaps/ParcelPublicAccess/MapServer"},
         {"Key":"imageryHybrid", "ThumbnailSource":"images/imgImageryHybrid.png", "Name":"Imagery", MapURL:"http://gis.nola.gov:6080/arcgis/rest/services/Basemaps/Aerials2012/MapServer"}
     ],
 
@@ -139,7 +139,7 @@ dojo.declare("js.Config", null, {
     //Set locator name fields to search.
     LocatorNameFields: [{
         FieldName: 'Loc_name',
-        FieldValues: ["RoadCenterline", "SiteAddressPoint","TaxParcel"]
+        FieldValues: [ "SiteAddressPoi","TaxParcel","RoadCenterline"]
     }],
 
     // Set Locator fields (fields to be used for searching).
@@ -186,10 +186,18 @@ dojo.declare("js.Config", null, {
               Name: "Conditional Use",
               Image:"images/landuse.png",
               HasRendererImage:false,
-              ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
               FieldNames:[
                   {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
                   {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+				  {Field: "<b>Zone Class 1:</b> ${ZONECLASS1}"},
+                  {Field: "<b>Zone Num 1:</b> ${ZONENUM1}"},
+				  {Field: "<b>Zone Class 2:</b> ${ZONECLASS2}"},
+                  {Field: "<b>Zone Num 2:</b> ${ZONENUM2}"},
+				  {Field: "<b>Zone Class 3:</b> ${ZONECLASS3}"},
+                  {Field: "<b>Zone Num 3:</b> ${ZONENUM3}"},
+				  {Field: "<b>Zone Class 4:</b> ${ZONECLASS4}"},
+                  {Field: "<b>Zone Num 4:</b> ${ZONENUM4}"},
                   {Field: "<b>Last Updated:</b> ${LASTUPDATE}"},
                   { Links:
                       [
@@ -206,7 +214,7 @@ dojo.declare("js.Config", null, {
               Name: "Zoning",
               Image:"images/landuse.png",
               HasRendererImage:false,
-              ServiceUrl:"http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/1",
               FieldNames:[
                   {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
                   {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
@@ -225,7 +233,7 @@ dojo.declare("js.Config", null, {
               Name: "Parcel Info",
               Image:"images/taxparcel.png",
               HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/LandBaseServices/MapServer/0",
               FieldNames:[
                   {Field: "<b>Parcel ID:</b> ${PARCELID}"},
                   {Field: "<b>Site Address:</b> ${SITEADDRESS}"},
@@ -245,8 +253,9 @@ dojo.declare("js.Config", null, {
           ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
           FieldNames:[
               {Field: "<b>Tax Bill ID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_alsearch.php?BEGIN=0&searchType=tax_bill&tax_bill+Value=Submit+Query&INPUT=${TAXBILLID}'> ${TAXBILLID}</a>"},
-              {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}"},
-              {Field: "<b>Land Value:</b> ${LNDVALUE}"}
+			  {Field: "<b>PARID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_display.php?KEY=${LOWPARCELID}'> ${LOWPARCELID}</a>"},
+              {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}", Type:'Currency'},
+              {Field: "<b>Land Value:</b> ${LNDVALUE}", Type:'Currency'}
           ],
           Color: "#FCD208",
           isRendererColor: true,
@@ -302,9 +311,10 @@ dojo.declare("js.Config", null, {
             {
                 Key: "taxparcels",
                 Title: "Tax Parcels",
-                ServiceURL: "http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
+                ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/LandBaseServices/MapServer/0",
                 isVisible: false,
                 isDynamicMapService: true,
+				opacity:.75,
                 Fields:
                     [
                         {
@@ -315,12 +325,44 @@ dojo.declare("js.Config", null, {
 
                     ]
             },{
-            Key: "zoning",
-            Title: "Zoning",
-            ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
+            Key: "square",
+            Title: "Square",
+            ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/LandBaseServices/MapServer/1",
             isVisible: false,
             isDynamicMapService: true,
-            opacity:.5,
+			opacity:.75,
+            Fields:
+                [
+                    {
+                        DisplayText: "Square:",
+                        FieldName: "${SQUARE}",
+                        DataType: "string"
+                    }
+
+                ]
+        },{
+            Key: "lot",
+            Title: "Lot",
+            ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/LandBaseServices/MapServer/2",
+            isVisible: false,
+            isDynamicMapService: true,
+			opacity:.75,
+            Fields:
+                [
+                    {
+                        DisplayText: "Lot:",
+                        FieldName: "${LOT}",
+                        DataType: "string"
+                    }
+
+                ]
+        },{
+            Key: "zoning",
+            Title: "Zoning",
+            ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/1",
+            isVisible: false,
+            isDynamicMapService: true,
+			opacity:.75,
             Fields:
                 [
                     {
@@ -333,10 +375,10 @@ dojo.declare("js.Config", null, {
         },{
             Key: "conditionalUse",
             Title: "Conditional use",
-            ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
+            ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
             isVisible: false,
             isDynamicMapService: true,
-            opacity:.5,
+			opacity:.75,
             Fields:
                 [
                     {

@@ -33,9 +33,8 @@ dojo.require("js.date");
 dojo.require("js.InfoWindow");
 
 dojo.require("esri.dijit.Legend");
-//dojo.require("esri.arcgis.utils");
-//dojo.require("dijit.form.CheckBox");
-
+// Currency Formatting
+dojo.require("dojo.currency");
 /*Global variables*/
 var baseMapLayers;  //Variable for storing base map layers
 var fontSize; //variable for storing font sizes for all devices.

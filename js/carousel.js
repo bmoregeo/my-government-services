@@ -544,11 +544,37 @@ function CreateServicePolygonInfo(service, feature, key) {
             //service.FieldNames[i].Field]
             var tdDisplayText = dojo.create("td");
             tr.appendChild(tdDisplayText);
+
+            var attribute = "";
             try{
-                var attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+                if (service.FieldNames[i].Type){
+                    if  (service.FieldNames[i].Type == "Currency"){
+                        attribute_switch = dojo.string.substitute(service.FieldNames[i].Field,
+                            feature.attributes,
+                            function(str){
+                                if (str){
+                                    return dojo.currency.format(str, {currency: 'USD'});
+                                }
+                                else{return null}
+                            });
+                    }
+                    else if (service.FieldNames[i].Type == "Numeric"){
+                        attribute_switch = dojo.string.substitute(service.FieldNames[i].Field,
+                            feature.attributes,
+                            function(str){
+                                if (str){
+                                    return dojo.number.format(str);
+                                }
+                                else{return null}
+                            });
+                    }
+                }
+                else{
+                    attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+                }
             }
             catch(err){
-                var attribute_switch = "";
+                attribute_switch = "";
             }
             tdDisplayText.innerHTML = attribute_switch
         }
