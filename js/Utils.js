@@ -848,7 +848,7 @@ function CreateCheckBox(layerId, chkBoxValue, isChecked) {
 }
 
 //function for creating a dynamic layer and adding those values to a div container
-function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, displayName) {
+function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, displayName, layerOpacity) {
     var imageParams = new esri.layers.ImageParameters();
     var lastindex = layerURL.lastIndexOf('/');
     imageParams.layerIds = [layerIndex];
@@ -857,7 +857,8 @@ function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, dis
     var dynamicMapService = new esri.layers.ArcGISDynamicMapServiceLayer(dynamicLayer, {
         id: layerId,
         imageParameters: imageParams,
-        visible: isVisible
+        visible: isVisible,
+        opacity:layerOpacity
     });
 
     dojo.io.script.get({
@@ -905,24 +906,26 @@ function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, dis
             tr.appendChild(td);
 
             td = document.createElement("td");
-            var img = document.createElement("img");
+
             try{
+                var img = document.createElement("img");
                 img.src = layerURL + '/images/' + data.drawingInfo.renderer.symbol.url;
+                if (isMobileDevice) {
+                    img.style.width = "44px";
+                    img.style.height = "44px";
+                }
+                else {
+                    img.style.width = "20px";
+                    img.style.height = "20px";
+                }
+                td.appendChild(img);
             }
             catch(err){
+                console.log("Cannot load image for layer list");
                 console.log(err);
-                img.src = "";
             }
 
-            if (isMobileDevice) {
-                img.style.width = "44px";
-                img.style.height = "44px";
-            }
-            else {
-                img.style.width = "20px";
-                img.style.height = "20px";
-            }
-            td.appendChild(img);
+
 
             tr.appendChild(td);
 

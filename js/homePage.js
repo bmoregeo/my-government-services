@@ -366,7 +366,7 @@ function MapInitFunction() {
     for (var i = 0; i < layers.length; i++) {
         if (layers[i].isDynamicMapService) {
             var lastindex = layers[i].ServiceURL.lastIndexOf('/');
-            map.addLayer(CreateDynamicServiceLayer(layers[i].ServiceURL, layers[i].ServiceURL.substr(lastindex + 1), layers[i].Key, layers[i].isVisible, layers[i].Title));
+            map.addLayer(CreateDynamicServiceLayer(layers[i].ServiceURL, layers[i].ServiceURL.substr(lastindex + 1), layers[i].Key, layers[i].isVisible, layers[i].Title, layers[i].opacity));
         }
         else {
             var featureLayer = new esri.layers.FeatureLayer(layers[i].ServiceURL, {

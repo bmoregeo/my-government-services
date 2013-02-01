@@ -320,6 +320,7 @@ dojo.declare("js.Config", null, {
             ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/15",
             isVisible: false,
             isDynamicMapService: true,
+            opacity:.5,
             Fields:
                 [
                     {
@@ -335,6 +336,7 @@ dojo.declare("js.Config", null, {
             ServiceURL: "http://50.17.213.29:6080/ArcGIS/rest/services/LGIM/GovernmentServices/MapServer/14",
             isVisible: false,
             isDynamicMapService: true,
+            opacity:.5,
             Fields:
                 [
                     {
