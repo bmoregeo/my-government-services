@@ -73,8 +73,23 @@ dojo.declare("js.Config", null, {
     // Set baseMap layers.
     // Please note: All base maps need to use the same spatial reference. By default, on application start the first base map will be loaded
     'BaseMapLayers':[
-        {"Key":"publicAccess", "ThumbnailSource":"images/imgPublicAccess.png", "Name":"Public Access", MapURL:"http://gis.nola.gov/arcgis/rest/services/Basemaps/ParcelPublicAccess/MapServer"},
-        {"Key":"imageryHybrid", "ThumbnailSource":"images/imgImageryHybrid.png", "Name":"Imagery", MapURL:"http://gis.nola.gov:6080/arcgis/rest/services/Basemaps/Aerials2012/MapServer"}
+        {
+			"Key":"streetMap", 
+			"ThumbnailSource":"images/imgPublicAccess.png", 
+			"Name":"Street Map", 
+			MapURL:[
+			"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"
+			]
+		},
+        {
+			"Key":"imageryHybrid", 
+			"ThumbnailSource":"images/imgImageryHybrid.png", 
+			"Name":"Imagery", 
+			MapURL:[
+				"http://gis.nola.gov/arcgis/rest/services/Basemaps/Aerials2012/MapServer",
+				"http://gis.nola.gov/arcgis/rest/services/Basemaps/ImageryReferenceOverlay/MapServer"
+				]
+		}
     ],
 
     // Initial map extent. Use comma (,) to separate values and dont delete the last comma.
@@ -134,12 +149,12 @@ dojo.declare("js.Config", null, {
     // ADDRESS SEARCH SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set Locator service URL.
-    LocatorURL: "http://gis.nola.gov/arcgis/rest/services/Composite/GeocodeServer",
+    LocatorURL: "http://gis.nola.gov/arcgis/rest/services/CompositePIN/GeocodeServer",
 
     //Set locator name fields to search.
     LocatorNameFields: [{
         FieldName: 'Loc_name',
-        FieldValues: [ "SiteAddressPoi","TaxParcel","RoadCenterline"]
+        FieldValues: [ "SiteAddressPoi","GeoPIN","TaxParcel","RoadCenterline"]
     }],
 
     // Set Locator fields (fields to be used for searching).
@@ -188,22 +203,28 @@ dojo.declare("js.Config", null, {
               HasRendererImage:false,
               ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
               FieldNames:[
+  				  {Field: "<span style='font-style:italic; color:#FF0'>A land-use that is allowed to operate subject to design and/or operational requirements thru a review and approval process.</span>"},
                   {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
                   {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+				  {Field: "<b>Zone Number:</b> ${ZONENUM}"},
+				  {Field: "<b>Zone Year:</b> ${ZONEYEAR}"},
+				  {Field: "<b>Ordinance Number:</b> ${ORDNUM}", Type: "Numeric"},
+				  {Field: "<b>Record Number:</b> ${RECNUM}"},
 				  {Field: "<b>Zone Class 1:</b> ${ZONECLASS1}"},
                   {Field: "<b>Zone Num 1:</b> ${ZONENUM1}"},
+				  {Field: "<b>Zone Year 1:</b> ${ZONEYEAR1}"},
+				  {Field: "<b>Ordinance Number 1:</b> ${ORDNUM1}", Type: "Numeric"},
 				  {Field: "<b>Zone Class 2:</b> ${ZONECLASS2}"},
                   {Field: "<b>Zone Num 2:</b> ${ZONENUM2}"},
+				  {Field: "<b>Ordinance Number 2:</b> ${ORDNUM2}", Type: "Numeric"},
 				  {Field: "<b>Zone Class 3:</b> ${ZONECLASS3}"},
                   {Field: "<b>Zone Num 3:</b> ${ZONENUM3}"},
+				  {Field: "<b>Ordinance Number 3:</b> ${ORDNUM3}", Type: "Numeric"},
 				  {Field: "<b>Zone Class 4:</b> ${ZONECLASS4}"},
                   {Field: "<b>Zone Num 4:</b> ${ZONENUM4}"},
-                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}"},
-                  { Links:
-                      [
-                          { DisplayText: "Website", FieldName: "HYPERLINK", type: "web" }
-                      ]
-                  }
+				  {Field: "<b>Ordinance Number 4:</b> ${ORDNUM4}", Type: "Numeric"},
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
+				  {Field: "<a href='${HYPERLINK}'>Visit this website for additional information</a>"}
              ],
               Color: "#FCD208",
               isRendererColor: true,
@@ -216,14 +237,11 @@ dojo.declare("js.Config", null, {
               HasRendererImage:false,
               ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/1",
               FieldNames:[
+			  {Field: "<span style='font-style:italic; color:#FF0'>Some ordinance(s) may be found by accessing this website.  All ordinances are available from the Clerk of Council’s office in City Hall.</span>"},
                   {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
                   {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
-                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}"},
-                  { Links:
-                      [
-                          { DisplayText: "Website", FieldName: "HYPERLINK", type: "web"},
-                      ]
-                  }
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
+				  {Field: "<a href='${HYPERLINK}'>Visit this website for additional information</a>"}
               ],
            Color: "#FCD208",
            isRendererColor: true,
@@ -248,14 +266,14 @@ dojo.declare("js.Config", null, {
           },
           ParcelAssessorInfo:{
           Name: "Assessor Info",
-          Image:"images/taxparcel.png",
+          Image:"images/taxparcel_assessor.png",
           HasRendererImage:false,
           ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
           FieldNames:[
               {Field: "<b>Tax Bill ID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_alsearch.php?BEGIN=0&searchType=tax_bill&tax_bill+Value=Submit+Query&INPUT=${TAXBILLID}'> ${TAXBILLID}</a>"},
 			  {Field: "<b>PARID:</b> <a target='_blank' href='http://qpublic4.qpublic.net/la_orleans_display.php?KEY=${LOWPARCELID}'> ${LOWPARCELID}</a>"},
-              {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}", Type:'Currency'},
-              {Field: "<b>Land Value:</b> ${LNDVALUE}", Type:'Currency'}
+              {Field: "<b>Assessed Value:</b> ${CNTASSDVAL}", Type:"Currency"},
+              {Field: "<b>Land Value:</b> ${LNDVALUE}", Type:"Currency"}
           ],
           Color: "#FCD208",
           isRendererColor: true,
@@ -263,7 +281,7 @@ dojo.declare("js.Config", null, {
       },
           ParcelOwnerInfo:{
               Name: "Owner Info",
-              Image:"images/taxparcel.png",
+              Image:"images/taxparcel_owner.png",
               HasRendererImage:false,
               ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/LGIM/TaxParcelQuery/MapServer/0",
               FieldNames:[
@@ -378,7 +396,7 @@ dojo.declare("js.Config", null, {
             ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
             isVisible: false,
             isDynamicMapService: true,
-			opacity:.75,
+			opacity:1,
             Fields:
                 [
                     {

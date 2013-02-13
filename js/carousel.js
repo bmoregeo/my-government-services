@@ -457,10 +457,12 @@ function CreateServicePolygonInfo(service, feature, key) {
 
     for (var i = 0; i < service.FieldNames.length; i++) {
 
-        var tr = dojo.create("tr");
-        tableInfoBody.appendChild(tr);
+        
 
         if (service.FieldNames[i].ServiceAvailability) {
+			var tr = dojo.create("tr");
+			tableInfoBody.appendChild(tr);
+		
             var td = dojo.create("td");
             td.style.vAlign = "top";
             tr.appendChild(td);
@@ -506,6 +508,8 @@ function CreateServicePolygonInfo(service, feature, key) {
         }
 
         else if (service.FieldNames[i].Links) {
+			var tr = dojo.create("tr");
+			tableInfoBody.appendChild(tr);
             var tdLink = dojo.create("td");
             tr.appendChild(tdLink);
             var tableLink = dojo.create("table");
@@ -541,18 +545,18 @@ function CreateServicePolygonInfo(service, feature, key) {
 
         else {
 
-            //service.FieldNames[i].Field]
-            var tdDisplayText = dojo.create("td");
-            tr.appendChild(tdDisplayText);
-
-            var attribute = "";
+            
             try{
+				//service.FieldNames[i].Field]
+				
+				var attribute = "";
+			
                 if (service.FieldNames[i].Type){
                     if  (service.FieldNames[i].Type == "Currency"){
                         attribute_switch = dojo.string.substitute(service.FieldNames[i].Field,
                             feature.attributes,
                             function(str){
-                                if (str){
+                                if (str && !(str == "0") && !(str == 0) && !(str == "")){
                                     return dojo.currency.format(str, {currency: 'USD'});
                                 }
                                 else{return null}
@@ -561,22 +565,50 @@ function CreateServicePolygonInfo(service, feature, key) {
                     else if (service.FieldNames[i].Type == "Numeric"){
                         attribute_switch = dojo.string.substitute(service.FieldNames[i].Field,
                             feature.attributes,
-                            function(str){
-                                if (str){
+                            function(str ){
+                                if (str && !(str == "0") && !(str == 0) && !(str == "")){
                                     return dojo.number.format(str);
+                                }
+                                else{return null}
+                            });
+                    }
+					else if (service.FieldNames[i].Type == "Date"){
+                        attribute_switch = dojo.string.substitute(service.FieldNames[i].Field,
+                            feature.attributes,
+                            function(str ){
+                                if (str && !(str == "0") && !(str == 0) && !(str == "")){
+									date = new Date(str)
+									
+									return date.toDateString();
+                                    
                                 }
                                 else{return null}
                             });
                     }
                 }
                 else{
-                    attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, feature.attributes);
+                    attribute_switch = dojo.string.substitute(service.FieldNames[i].Field, 
+						feature.attributes,
+						function(str ){
+                                if (str && !(str == "0") && !(str == 0) && !(str == "")){
+                                    return str;
+                                }
+                                else{
+									return null;
+								}
+                            });
                 }
+				// If there is an attribute, create the td and keep going, otherwise skip
+				var tr = dojo.create("tr");
+				tableInfoBody.appendChild(tr);
+				var tdDisplayText = dojo.create("td");
+				tr.appendChild(tdDisplayText);
+				tdDisplayText.innerHTML = attribute_switch
             }
             catch(err){
-                attribute_switch = "";
+                console.log(err);
             }
-            tdDisplayText.innerHTML = attribute_switch
+            
         }
     }
     dojo.byId("divContent" + key).appendChild(tableInfo);

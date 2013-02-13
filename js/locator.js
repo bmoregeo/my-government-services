@@ -56,10 +56,12 @@ function ShowLocatedAddress(candidates) {
             var tempMapPoint;
              tempMapPoint = new esri.geometry.Point(candidate.location.x, candidate.location.y, map.spatialReference);
             for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
-                if (map.getLayer(baseMapLayers[bMap].Key).visible) {
-                    var bmap = baseMapLayers[bMap].Key;
-                }
-            }
+				for (var z = 0; z < baseMapLayers[bMap].MapURL.length; z++) {
+					if (map.getLayer(baseMapLayers[bMap].Key + z).visible) {
+						var bmap = baseMapLayers[bMap].Key + z;
+					}
+				}
+			}
             if (!map.getLayer(bmap).fullExtent.contains(tempMapPoint)) {
                 tempMapPoint = null;
             }

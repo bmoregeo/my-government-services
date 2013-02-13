@@ -17,15 +17,20 @@
 
 function CreateBaseMapComponent() {
     for (var i = 0; i < baseMapLayers.length; i++) {
-        map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL, baseMapLayers[i].Key, (i == 0) ? true : false));
-        if (i == 0) {
-            dojo.connect(map.getLayer(baseMapLayers[i].Key), "onLoad", function (e) {
-            });
+        for (var z = 0; z < baseMapLayers[i].MapURL.length; z++) {
+            console.log(baseMapLayers[i].MapURL[z])
+
+            map.addLayer(CreateBaseMapLayer(baseMapLayers[i].MapURL[z], baseMapLayers[i].Key + z, (i == 0) ? true : false));
+            console.log(baseMapLayers[i].Key + z);
+            if (i == 0) {
+                dojo.connect(map.getLayer(baseMapLayers[i].Key + z), "onLoad", function (e) {
+                });
+            }
         }
     }
 
-    var layerList = dojo.byId('layerList');
 
+    var layerList = dojo.byId('layerList');
     for (var i = 0; i < Math.ceil(baseMapLayers.length / 2); i++) {
         if (baseMapLayers[(i * 2) + 0]) {
             var layerInfo = baseMapLayers[(i * 2) + 0];
@@ -41,6 +46,7 @@ function CreateBaseMapComponent() {
 }
 
 function CreateBaseMapElement(baseMapLayerInfo) {
+    //console.log(baseMapLayerInfo);
     var divContainer = dojo.create("div");
     divContainer.className = "baseMapContainerNode";
     var imgThumbnail = dojo.create("img");
@@ -65,6 +71,8 @@ function ChangeBaseMap(spanControl) {
     HideMapLayers();
     var key = spanControl.getAttribute('layerId');
 
+    console.log(baseMapLayers);
+
     for (var i = 0; i < baseMapLayers.length; i++) {
         dojo.removeClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
         if (dojo.isIE) {
@@ -72,10 +80,18 @@ function ChangeBaseMap(spanControl) {
             dojo.byId("imgThumbNail" + baseMapLayers[i].Key).style.marginLeft = "0px";
             dojo.byId("spanBaseMapText" + baseMapLayers[i].Key).style.marginTop = "0px";
         }
+
+
+        //console.log(key);
+        //console.log(baseMapLayers[i].Key);
+
         if (baseMapLayers[i].Key == key) {
             dojo.addClass(dojo.byId("imgThumbNail" + baseMapLayers[i].Key), "selectedBaseMap");
-            var layer = map.getLayer(baseMapLayers[i].Key);
-            layer.show();
+            for (var z = 0; z < baseMapLayers[i].MapURL.length; z++) {
+                console.log(baseMapLayers[i].Key + z);
+                var layer = map.getLayer(baseMapLayers[i].Key + z);
+                layer.show();
+            }
         }
     }
 }
@@ -87,9 +103,11 @@ function CreateBaseMapLayer(layerURL, layerId, isVisible) {
 
 function HideMapLayers() {
     for (var i = 0; i < baseMapLayers.length; i++) {
-        var layer = map.getLayer(baseMapLayers[i].Key);
-        if (layer) {
-            layer.hide();
+        for (var z = 0; z < baseMapLayers[i].MapURL.length; z++) {
+            var layer = map.getLayer(baseMapLayers[i].Key + z);
+            if (layer) {
+                layer.hide();
+            }
         }
     }
 }
