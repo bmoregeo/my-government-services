@@ -19,11 +19,12 @@
      | limitations under the License.
     -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Planning Viewer</title>
+    <title></title>
     <link rel="shortcut icon" href="images/fevicon.ico" />
     <link rel="apple-touch-icon" href="images/appIcon.png" />
-    <link id="stylesheet" href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.1/js/dojo/dojox/mobile/themes/iPhone/iPhone.css'
-        rel='stylesheet' />
+    <link id="stylesheet"
+          href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.1/js/dojo/dojox/mobile/themes/iPhone/iPhone.css'
+          rel='stylesheet' />
     <link href="styles/myGovServices.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" id="dynamicStyleSheet" />
     <script type="text/javascript">
@@ -115,10 +116,10 @@
                                 <img alt="Settings" src="images/imgGeolocation.png" class="imgOptions" title="Locate"
                                     onclick="ShowMyLocation();" style="cursor: pointer" />
                             </td>
-                            <!--<td align="center" id="Td1" class="tdHeader">
-                                <img alt="Legend" src="images/locate.png" class="imgOptions" title="Legend"
-                                     onclick="showLegendContainer()" style="cursor: pointer" />
-                            </td>-->
+                            <td align="center" id="tdOperationalLayers" class="tdHeader">
+                                <img alt="Layer" src="images/menu.png" class="imgOptions" title="Layer"
+                                     onclick="ShowOperationalLayers();" style="cursor: pointer" />
+                            </td>
                             <td align="center" id="tdBaseMap">
                             </td>
                             <td align="center" class="tdHeader">
@@ -180,7 +181,29 @@
             </tr>
         </table>
     </div>
-
+    <div id="divOperationalLayerContainer"
+         class="divLayerContainer hideContainerHeight">
+        <div id="divOperationalLayerHolder" class="divLayerHolder">
+            <div id="divOperationalLayerContentHolder"
+                 class="divOperationalLayerContentHolder"
+                 style="height: 100%;">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="divLayers" class="divLayers">
+                                <table id="tblLayers" style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div id="divLayerContainer" class="divLayerContainer hideContainerHeight">
         <div id="divLayerHolder" class="divLayerHolder">
@@ -191,7 +214,7 @@
                             <div id="layerList" class="layerList">
                             </div>
                         </td>
-                    </tr>
+                    </tr><!--
                     <tr>
                         <td>
                             <div id="divLayers" class="divLayers">
@@ -207,7 +230,7 @@
                                 </table>
                             </div>
                         </td>
-                    </tr>
+                    </tr>-->
                 </table>
             </div>
         </div>

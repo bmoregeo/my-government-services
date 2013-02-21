@@ -117,6 +117,10 @@ function ShowBaseMaps() {
         dojo.replaceClass("divAppContainer", "hideContainerHeight", "showContainerHeight");
         dojo.byId('divAppContainer').style.height = '0px';
     }
+    if (dojo.coords("divOperationalLayerContainer").h > 0) {
+        dojo.replaceClass("divOperationalLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId("divOperationalLayerContainer").style.height = "0px";
+    }
     if (!isMobileDevice) {
         if (dojo.coords("divAddressHolder").h > 0) {
             dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");

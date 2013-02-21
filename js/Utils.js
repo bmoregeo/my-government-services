@@ -50,6 +50,10 @@ function ShowMyLocation() {
         dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
         dojo.byId('divLayerContainer').style.height = '0px';
     }
+    if (dojo.coords("divOperationalLayerContainer").h > 0) {
+        dojo.replaceClass("divOperationalLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId("divOperationalLayerContainer").style.height = "0px";
+    }
     if (!isMobileDevice) {
         if (dojo.coords("divAddressHolder").h > 0) {
             dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
@@ -218,40 +222,7 @@ function ResizeHandler() {
         FixBottomPanelWidth();
     }
 }
-// CFRICKE
-// function to pop down the legend menu
-function showLegendContainer(){
-    if (dojo.coords("divLayerContainer").h > 0) {
-        dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
-        dojo.byId('divLayerContainer').style.height = '0px';
-    }
-    if (!isMobileDevice) {
-        if (dojo.coords("divAddressHolder").h > 0) {
-            dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
-            dojo.byId('divAddressHolder').style.height = '0px';
-        }
-    }
-    var cellHeight = (isMobileDevice || isTablet) ? 81 : 60;
-    if (dojo.coords("divLegendContainer").h > 0) {
-        dojo.replaceClass("divLegendContainer", "hideContainerHeight", "showContainerHeight");
-        dojo.byId('divLegendContainer').style.height = '0px';
-    }
-    else {
-        //dojo.byId('divLegendContainer').style.height = cellHeight + "px";
-        console.log(dojo.byId('divLegendContentHolder').style.height);
-        if (dojo.byId('divLegendContentHolder').style.height > 200){
-            dojo.byId('divLegendContainer').style.height = "200px";
-        }
-        else{
-            dojo.byId('divLegendContainer').style.height = "50%";
-        }
-        dojo.replaceClass("divLegendContainer", "showContainerHeight", "hideContainerHeight");
 
-    }
-    console.log("SLIDERPRE");
-    SetHeightLegendResults();
-    console.log("SLIDERPOST");
-}
 function SetHeightLegendResults() {
     //var height = (isMobileDevice) ? (dojo.window.getBox().h - 50) : dojo.coords(dojo.byId('divLegendContentHolder')).h;
     //if (height > 0) {
@@ -271,6 +242,10 @@ function ShowLocateContainer() {
     if (dojo.coords("divLayerContainer").h > 0) {
         dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
         dojo.byId('divLayerContainer').style.height = '0px';
+    }
+    if (dojo.coords("divOperationalLayerContainer").h > 0) {
+        dojo.replaceClass("divOperationalLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId("divOperationalLayerContainer").style.height = "0px";
     }
     if (isMobileDevice) {
         dojo.byId('divAddressContainer').style.display = "block";
@@ -340,6 +315,10 @@ function ShareLink(ext) {
                 if (dojo.coords("divLayerContainer").h > 0) {
                     dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
                     dojo.byId('divLayerContainer').style.height = '0px';
+                }
+                if (dojo.coords("divOperationalLayerContainer").h > 0) {
+                    dojo.replaceClass("divOperationalLayerContainer", "hideContainerHeight", "showContainerHeight");
+                    dojo.byId("divOperationalLayerContainer").style.height = "0px";
                 }
                 if (!isMobileDevice) {
                     if (dojo.coords("divAddressHolder").h > 0) {
@@ -820,7 +799,37 @@ function HideInformationContainer() {
     map.infoWindow.hide();
     selectedGraphic = null;
 }
+/*******************************************************
+ * Overlay Map Services
+ *******************************************************/
 
+
+function ShowOperationalLayers() {
+    if (dojo.coords("divAppContainer").h > 0) {
+        dojo.replaceClass("divAppContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divAppContainer').style.height = '0px';
+    }
+    if (dojo.coords("divLayerContainer").h > 0) {
+        dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divLayerContainer').style.height = '0px';
+    }
+
+    if (!isMobileDevice) {
+        if (dojo.coords("divAddressHolder").h > 0) {
+            dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
+            dojo.byId('divAddressHolder').style.height = '0px';
+        }
+    }
+
+    if (dojo.coords("divOperationalLayerContainer").h > 0) {
+        dojo.replaceClass("divOperationalLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId("divOperationalLayerContainer").style.height = "0px";
+    }
+    else {
+        dojo.byId('divOperationalLayerContainer').style.height = Math.ceil(baseMapLayers.length / 2) * (dojo.coords("divOperationalLayerHolder").h) + ((isTablet) ? 10 : 8) + "px";
+        dojo.replaceClass("divOperationalLayerContainer", "showContainerHeight", "hideContainerHeight");
+    }
+}
 
 //function to create checkbox
 function CreateCheckBox(layerId, chkBoxValue, isChecked) {
@@ -906,11 +915,6 @@ function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, dis
             tr.appendChild(td);
 
             td = document.createElement("td");
-
-            
-
-
-
             tr.appendChild(td);
 
             td = document.createElement("td");
@@ -937,3 +941,5 @@ function GetLayerInfo(key) {
             return i;
     }
 }
+
+
