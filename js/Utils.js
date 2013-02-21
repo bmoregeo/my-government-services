@@ -907,23 +907,7 @@ function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, dis
 
             td = document.createElement("td");
 
-            try{
-                var img = document.createElement("img");
-                img.src = layerURL + '/images/' + data.drawingInfo.renderer.symbol.url;
-                if (isMobileDevice) {
-                    img.style.width = "44px";
-                    img.style.height = "44px";
-                }
-                else {
-                    img.style.width = "20px";
-                    img.style.height = "20px";
-                }
-                td.appendChild(img);
-            }
-            catch(err){
-                console.log("Cannot load image for layer list");
-                console.log(err);
-            }
+            
 
 
 

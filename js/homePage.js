@@ -204,6 +204,9 @@ function Initialize(responseObject) {
     dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
     dojo.byId('divSplashContent').innerHTML = responseObject.SplashScreenMessage;
 
+    // Set page title
+    window.document.title = responseObject.ApplicationTitle;
+
     dojo.xhrGet(
                     {
                         url: "ErrorMessages.xml",

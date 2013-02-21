@@ -58,6 +58,9 @@ dojo.declare("js.Config", null, {
     // Set application title.
     ApplicationName: "Planning Viewer",
 
+    // Set application window title.
+    ApplicationTitle: "NOLA Planning Viewer",
+
     // Set application icon path.
     ApplicationIcon: "images/landuse.png",
 
