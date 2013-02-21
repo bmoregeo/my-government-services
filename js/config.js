@@ -58,6 +58,9 @@ dojo.declare("js.Config", null, {
     // Set application title.
     ApplicationName: "Planning Viewer",
 
+    // Set application window title
+    ApplicationTitle: "NOLA Planning Viewer",
+
     // Set application icon path.
     ApplicationIcon: "images/landuse.png",
 
@@ -408,5 +411,8 @@ dojo.declare("js.Config", null, {
                 ]
         }
 
-    ]
+    ],
+    //Set URL for the print task
+    PrintTaskURL: "http://yourserver/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task/execute",
+
 });

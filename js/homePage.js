@@ -27,6 +27,8 @@ dojo.require("esri.layers.FeatureLayer");
 dojo.require("esri.tasks.query");
 dojo.require("esri.tasks.locator");
 dojo.require("esri.tasks.route");
+dojo.require("esri.dijit.Print");
+
 
 dojo.require("js.Config");
 dojo.require("js.date");
@@ -35,6 +37,8 @@ dojo.require("js.InfoWindow");
 dojo.require("esri.dijit.Legend");
 // Currency Formatting
 dojo.require("dojo.currency");
+
+
 /*Global variables*/
 var baseMapLayers;  //Variable for storing base map layers
 var fontSize; //variable for storing font sizes for all devices.
@@ -90,6 +94,10 @@ var callOutAddress;
 
 var locationFields;
 var locationName;
+
+
+var printTaskURL; // CFRICKE: For print URL from config
+
 //Function to initialize the map and read data from Configuration file
 function Init() {
     esri.config.defaults.io.proxyUrl = "proxy.ashx";        //Setting to use proxy file
@@ -167,6 +175,7 @@ function Init() {
 
 //function calls at the initialize state
 function Initialize(responseObject) {
+    printTaskURL = responseObject.PrintTaskURL; // CFRICKE: Get PrintTaskURL
 
     if (isMobileDevice) {
         dojo.replaceClass("divAddressHolder", "hideContainer", "hideContainerHeight");
@@ -203,6 +212,8 @@ function Initialize(responseObject) {
     dojo.byId('imgApp').src = responseObject.ApplicationIcon;
     dojo.byId("lblAppName").innerHTML = responseObject.ApplicationName;
     dojo.byId('divSplashContent').innerHTML = responseObject.SplashScreenMessage;
+    //cfricke - set title
+    window.document.title = responseObject.ApplicationTitle;
 
     dojo.xhrGet(
                     {

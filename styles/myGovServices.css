@@ -268,6 +268,27 @@ body, html
     -pie-background: rgba(0,0,0,0.9);
     behavior: url("styles/PIE.htc");
 }
+/*---------------------------------------------------------------------------------------------------------*/
+
+/*Print Container Styles*/
+
+.divPrintContainer
+{
+    position: absolute;
+    z-index: 1000;
+    top: 60px;
+    right: 15px;
+}
+
+.divPrintHolder
+{
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.9);
+    -pie-background: rgba(0,0,0,0.9);
+    behavior: url("styles/PIE.htc");
+}
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Header Styles*/

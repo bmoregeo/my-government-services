@@ -248,9 +248,7 @@ function showLegendContainer(){
         dojo.replaceClass("divLegendContainer", "showContainerHeight", "hideContainerHeight");
 
     }
-    console.log("SLIDERPRE");
     SetHeightLegendResults();
-    console.log("SLIDERPOST");
 }
 function SetHeightLegendResults() {
     //var height = (isMobileDevice) ? (dojo.window.getBox().h - 50) : dojo.coords(dojo.byId('divLegendContentHolder')).h;
@@ -907,23 +905,6 @@ function CreateDynamicServiceLayer(layerURL, layerIndex, layerId, isVisible, dis
 
             td = document.createElement("td");
 
-            try{
-                var img = document.createElement("img");
-                img.src = layerURL + '/images/' + data.drawingInfo.renderer.symbol.url;
-                if (isMobileDevice) {
-                    img.style.width = "44px";
-                    img.style.height = "44px";
-                }
-                else {
-                    img.style.width = "20px";
-                    img.style.height = "20px";
-                }
-                td.appendChild(img);
-            }
-            catch(err){
-                console.log("Cannot load image for layer list");
-                console.log(err);
-            }
 
 
 
@@ -951,5 +932,147 @@ function GetLayerInfo(key) {
     for (var i = 0; i < layers.length; i++) {
         if (layers[i].Key == key)
             return i;
+    }
+}
+
+
+
+/* CFRICKE: Pulled from Land Use Public Notification */
+//Function for showing print window
+function ShowModal(map) {
+    if (dojo.coords("divLayerContainer").h > 0) {
+        dojo.replaceClass("divLayerContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divLayerContainer').style.height = '0px';
+    }
+    if (!isMobileDevice) {
+        if (dojo.coords("divAddressHolder").h > 0) {
+            dojo.replaceClass("divAddressHolder", "hideContainerHeight", "showContainerHeight");
+            dojo.byId('divAddressHolder').style.height = '0px';
+        }
+    }
+    var cellHeight = (isMobileDevice || isTablet) ? 81 : 120;
+    if (dojo.coords("divPrintContainer").h > 0) {
+        dojo.replaceClass("divPrintContainer", "hideContainerHeight", "showContainerHeight");
+        dojo.byId('divPrintContainer').style.height = '0px';
+    }
+    else {
+        dojo.byId('divPrintContainer').style.height = cellHeight + "px";
+        dojo.replaceClass("divPrintContainer", "showContainerHeight", "hideContainerHeight");
+    }
+}
+
+//function to show toggle layout types
+function ToggleSelectedLayoutList() {
+    dojo.byId('divSelectedLayout').style.display = (dojo.byId('divSelectedLayout').style.display == "block") ? "none" : "block";
+    CreateScrollbar(dojo.byId('divLayoutconatiner'), dojo.byId('divlayoutContent'));
+}
+
+//function to create pdf report
+function CreatePDF(reportType) {
+    var feature = map.getLayer(tempGraphicsLayerId).graphics;
+
+
+    /*if (feature.length == 0) {
+        alert(messages.getElementsByTagName("selectParcel")[0].childNodes[0].nodeValue);
+        return;
+    }
+    */
+
+    console.log(feature);
+    for (var i = 0; i < layers.length; i++) {
+        console.log(layers[i]);
+        if (!layers[i].isDynamicMapService) {
+            ShowProgressIndicator();
+
+            if (reportType == "PropertyMap") {
+                if (dojo.byId('txtSelectedLayout').value.trim() == "") {
+                    HideProgressIndicator();
+                    alert(messages.getElementsByTagName("selectMapLayout")[0].childNodes[0].nodeValue);
+                    return;
+                }
+                else if (dojo.byId('txtMapTitle').value.trim() == "") {
+                    HideProgressIndicator();
+                    alert(messages.getElementsByTagName("enterMapTitle")[0].childNodes[0].nodeValue);
+                    return;
+                }
+            }
+
+            var parcelId = selectedParcel;
+            var reportDownloadFlag = false;
+            if (reportType == "PropertyReport" && propertyReportPrice == 0) {
+                reportDownloadFlag = true;
+                ShowProgressIndicator();
+            }
+            if (reportType == "PropertyMap" && propertyMapPrice == 0) {
+                reportDownloadFlag = true;
+                ShowProgressIndicator();
+            }
+
+            if (!reportDownloadFlag && pdfData[parcelId] && pdfData[parcelId][reportType]) {
+                HideProgressIndicator();
+                alert(messages.getElementsByTagName("alreadyAddedParcelId")[0].childNodes[0].nodeValue);
+                return;
+            }
+            else if (!pdfData[parcelId]) {
+                pdfData[parcelId] = {};
+            }
+            pdfData[parcelId][reportType] = {};
+            pdfData[parcelId][reportType]["ReportDescription"] = (reportType == 'PropertyReport') ? "Property Report - " + taxParcelId + " " + parcelId : "Property Map - " + taxParcelId + " " + parcelId;
+            pdfData[parcelId][reportType]["mapTitle"] = dojo.byId('txtMapTitle').value;
+            pdfData[parcelId][reportType]["AttributeInfo"] = "";
+            pdfData[parcelId][reportType]["NeighbourhoodInfo"] = "";
+            pdfData[parcelId][reportType]["BroadbandInfo"] = {};
+            pdfData[parcelId][reportType]["mapExtent"] = map.extent.xmin + "," + map.extent.ymin + "," + map.extent.xmax + "," + map.extent.ymax;
+            pdfData[parcelId][reportType]["layout"] = dojo.byId('txtSelectedLayout').getAttribute("layout");
+
+
+            var graphic = new esri.Graphic(feature.geometry, null, null, null);
+            pdfData.isEmpty = false;
+            pdfData[parcelId][reportType]["Graphic"] = graphic;
+
+            for (var i = 0; i < layers.length; i++) {
+                if (!layers[i].isDynamicMapService) {
+                    pdfData[parcelId][reportType]["objId"] = feature.attributes[map.getLayer(layers[i].Key).objectIdField];
+                    break;
+                }
+            }
+
+
+
+            var parcelInfoWindowFields = layers[i].Fields;
+            for (var index in feature.attributes) {
+                if (!feature.attributes[index]) {
+                    feature.attributes[index] = showNullValueAs;
+                }
+            }
+
+            var attributeInfo = [];
+            attributeInfo.push(dojo.string.substitute(infoWindowHeader, feature.attributes));
+            for (var index in parcelInfoWindowFields) {
+                if (parcelInfoWindowFields[index].DataType == "double") {
+                    var formattedValue = currency + " " + dojo.number.format(dojo.string.substitute(parcelInfoWindowFields[index].FieldName, feature.attributes), { pattern: "#,##0.##" });
+                    attributeInfo.push(formattedValue);
+                }
+                else {
+                    attributeInfo.push(dojo.string.substitute(parcelInfoWindowFields[index].FieldName, feature.attributes));
+                }
+            }
+
+            pdfData[parcelId][reportType]["AttributeInfo"] = attributeInfo.join("^");
+
+            for (var i in neighbourHoodLayerInfo) {
+                if (map.getLayer(neighbourHoodLayerInfo[i].id).maxScale <= mapScale && map.getLayer(neighbourHoodLayerInfo[i].id).minScale >= mapScale) {
+                    PopulateNeighbourHoodInformation(neighbourHoodLayerInfo[i], feature.geometry.getExtent().getCenter(), feature.attributes[parcelAttributeID], reportType);
+                }
+            }
+
+            geometryService.project([feature.geometry.getExtent().getCenter()], new esri.SpatialReference({ wkid: 4326 }), function (newPoint) {
+                var point = newPoint[0];
+                var location = { "latitude": point.y, "longitude": point.x };
+                for (var i = 0; i < broadBandService.length; i++) {
+                    PopulateBroadBandInformation(broadBandService[i], location, feature.attributes[parcelAttributeID], reportType);
+                }
+            });
+        }
     }
 }
