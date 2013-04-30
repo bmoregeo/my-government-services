@@ -90,6 +90,8 @@ var callOutAddress;
 
 var locationFields;
 var locationName;
+var ShowSplashScreenMessage;
+
 //Function to initialize the map and read data from Configuration file
 function Init() {
     esri.config.defaults.io.proxyUrl = "proxy.ashx";        //Setting to use proxy file
@@ -114,6 +116,7 @@ function Init() {
     else {
         fontSize = 11;
         isBrowser = true;
+        //isMobileDevice = true;
         dojo.byId('dynamicStyleSheet').href = "styles/browser.css";
 
     }
@@ -169,6 +172,20 @@ function Init() {
 function Initialize(responseObject) {
 
     if (isMobileDevice) {
+	    var imgGeo = dojo.create('img');
+        imgGeo.src = "images/imgGeolocateLabel.png";
+        imgGeo.className = "imgOptions";
+        imgGeo.title = "Locate";
+        imgGeo.id = "imgGeolocateLabel";
+        imgGeo.style.cursor = "pointer";
+        imgGeo.onclick = function () {
+            ShowMyLocation();
+        }
+		
+        dojo.byId("tdGeolocation").appendChild(imgGeo);
+        dojo.byId("tdGeolocation").className = "tdHeader";
+	
+	
         dojo.replaceClass("divAddressHolder", "hideContainer", "hideContainerHeight");
         dojo.byId('divAddressContainer').style.display = "none";
         dojo.removeClass(dojo.byId('divAddressContainer'), "hideContainerHeight");
@@ -181,16 +198,29 @@ function Initialize(responseObject) {
     }
     else {
         var imgBasemap = dojo.create('img');
-        imgBasemap.src = "images/imgBaseMap.png";
+        imgBasemap.src = "images/imgBasemapLabel.png";
         imgBasemap.className = "imgOptions";
-        imgBasemap.title = "Switch Basemap";
-        imgBasemap.id = "imgBaseMap";
+        imgBasemap.title = "Select Basemap";
+        imgBasemap.id = "imgBasemap";
         imgBasemap.style.cursor = "pointer";
         imgBasemap.onclick = function () {
             ShowBaseMaps();
         }
         dojo.byId("tdBaseMap").appendChild(imgBasemap);
         dojo.byId("tdBaseMap").className = "tdHeader";
+
+        var imgOperational = dojo.create('img');
+        imgOperational.src = "images/imgLayersLabel.png";
+        imgOperational.className = "imgOptions";
+        imgOperational.title = "Switch Operational Layers";
+        imgOperational.id = "imgOperational";
+        imgOperational.style.cursor = "pointer";
+        imgOperational.onclick = function () {
+            ShowOperationalLayers();
+        }
+        dojo.byId("tdOperationalLayers").appendChild(imgOperational);
+        dojo.byId("tdOperationalLayers").className = "tdHeader";
+
         dojo.byId('divSplashScreenContent').style.width = "350px";
         dojo.byId('divSplashScreenContent').style.height = "290px";
         dojo.byId('divAddressContainer').style.display = "block";
@@ -245,6 +275,7 @@ function Initialize(responseObject) {
     infoPopupHeight = responseObject.InfoPopupHeight;
     callOutAddress = responseObject.CallOutAddress;
     locatorNameFields = responseObject.LocatorNameFields;
+	ShowSplashScreenMessage = responseObject.ShowSplashScreenMessage;
 
     dojo.connect(routeTask, "onSolveComplete", ShowRoute);
     dojo.connect(routeTask, "onError", ErrorHandler);
@@ -317,10 +348,13 @@ function MapInitFunction() {
     var routeLayer = new esri.layers.GraphicsLayer();
     routeLayer.id = routeLayerId;
     map.addLayer(routeLayer);
-
-    dojo.byId('divSplashScreenContainer').style.display = "block";
-    dojo.replaceClass("divSplashScreenContent", "showContainer", "hideContainer");
-    SetHeightSplashScreen();
+	//CFRICKE: Add ability to turn off splash screen.
+	if (ShowSplashScreenMessage){
+	
+		dojo.byId('divSplashScreenContainer').style.display = "block";
+		dojo.replaceClass("divSplashScreenContent", "showContainer", "hideContainer");
+		SetHeightSplashScreen();
+	}
     if (!isMobileDevice) {
         window.onresize = function () {
             ResizeHandler();
@@ -341,14 +375,8 @@ function MapInitFunction() {
             selectedGraphic = null;
             CreateCarousel();
             GetServices(evt);
-            //CFRICKE - From Tax Parcel Viewer
-            var checked = dojo.query('img[state = "check"]', dojo.byId('divLayers'));
-            if (!draw) {
-                if (checked.length == 0) {
-                    LocateParcel(null, evt.mapPoint)
-                    return;
-                }
-            }
+
+
         });
     }
 

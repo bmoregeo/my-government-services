@@ -45,12 +45,15 @@ body, html
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Verdana !important;
+    font-family: Trebuchet MS, Verdana !important;
     overflow: hidden;
     color: White;
     visibility: visible !important;
 }
-
+.strong { 
+	font-size: 120%;
+	color: #09c;
+	}
 /*---------------------------------------------------------------------------------------------------------*/
 /* Styles for splash screen*/
 
@@ -280,15 +283,18 @@ body, html
 
 .imgOptions
 {
-    height: 30px;
-    width: 30px;
+    //height: 40px;
+    //width: 40px;
 }
 
 .imgApp
 {
-    width: 64px;
-    height: 64px;
-}
+/* changed by EO */
+    width: 90px; 
+	position: relative;
+	top: -6px;
+/* end change */
+	}
 
 .divLogo
 {
@@ -304,8 +310,8 @@ body, html
 .divApplicationHeader
 {
     vertical-align: middle;
-    background: rgba(0,0,0,0.9);
-    -pie-background: rgba(0,0,0,0.9);
+    background: rgba(3,34,70,0.7);
+    -pie-background: rgba(3,34,70,0.7);
     behavior: url("styles/PIE.htc");
     top: 0px;
     height: 55px;
@@ -646,20 +652,22 @@ body, html
 
 .divDetailsHeader
 {
-    height: 30px;
+    height: 25px;
     position: relative;
     -moz-border-radius-topleft: 10px;
     -webkit-border-top-left-radius: 10px;
     -moz-border-radius-topright: 10px;
     -webkit-border-top-right-radius: 10px;
     border-radius: 10px 10px 0px 0px;
-    background-color: #303030;
+    background-color: #032246;
+	border-bottom: 1px solid #fff;
+	padding-bottom: 4px;
     behavior: url("styles/PIE.htc");
 }
 
 .divContentStyle
 {
-    background-color: #626262;
+    background-color: #032246;
     height: 150px;
     position: relative;
     width: 100%;
@@ -773,4 +781,3 @@ body, html
 a{
     color:#fff;
 }
-

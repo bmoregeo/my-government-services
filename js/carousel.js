@@ -557,7 +557,7 @@ function CreateServicePolygonInfo(service, feature, key) {
                             feature.attributes,
                             function(str){
                                 if (str && !(str == "0") && !(str == 0) && !(str == "")){
-                                    return dojo.currency.format(str, {currency: 'USD'});
+                                    return dojo.currency.format(str.replace(/\D/,""), {currency: 'USD'});
                                 }
                                 else{return null}
                             });
@@ -567,7 +567,7 @@ function CreateServicePolygonInfo(service, feature, key) {
                             feature.attributes,
                             function(str ){
                                 if (str && !(str == "0") && !(str == 0) && !(str == "")){
-                                    return dojo.number.format(str);
+                                    return dojo.number.format(str.replace(/\D/,""));
                                 }
                                 else{return null}
                             });
@@ -1296,16 +1296,38 @@ function ValidateResults(mapPoint) {
         WipeInResults();
     }
     else {
+
+        setTimeout(function () {
+            console.log('start');
+            map.infoWindow.setTitle("Layers");
+			map.infoWindow.setContent("Click Arrow for More Info");
+			dojo.byId("tdListHeader").innerHTML = "Click Arrow for More Info";
+            dojo.byId('divListContainer').style.display = "block";
+            dojo.byId('divMobileContainerView').style.display = "block";
+            SetContentHeight("divDataListContent", 60);
+            CreateScrollbar(dojo.byId("divDataListContainer"), dojo.byId("divDataListContent"));
+            dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
+            dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
+            dojo.byId('divInfoContent').style.display = "block";
+            console.log(dojo.byId('divMobileContainerDetails'));
+        }, 500);
+
+        /*
         selectedGraphic = mapPoint;
+
+
         map.infoWindow.resize(225, 60);
         map.setExtent(GetBrowserMapExtent(selectedGraphic));
         setTimeout(function () {
             selectedMapPoint = mapPoint;
             var screenPoint = map.toScreen(selectedMapPoint);
             screenPoint.y = map.height - screenPoint.y;
-            map.infoWindow.show(screenPoint);
+            
+			
+			map.infoWindow.show(screenPoint);
             if (isMobileDevice) {
                 map.infoWindow.setTitle("Address");
+				
                 dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
                     if (isMobileDevice) {
                         map.infoWindow.hide();
@@ -1322,7 +1344,11 @@ function ValidateResults(mapPoint) {
 
                 });
             }
+			
         }, 500);
+        */
+
+
     }
 }
 
@@ -1349,6 +1375,7 @@ function DisplayMblInfo(mapPoint, layer, targetName) {
                 dojo.connect(map.infoWindow.imgDetailsInstance(), "onclick", function () {
                     if (isMobileDevice) {
                         map.infoWindow.hide();
+						
                         dojo.byId('divMobileContainerView').style.display = "block";
                         dojo.replaceClass("divMobileContainerView", "opacityShowAnimation", "opacityHideAnimation");
                         dojo.replaceClass("divMobileContainerDetails", "showContainer", "hideContainer");
@@ -1426,6 +1453,9 @@ function CreateListLayOut() {
             MblDataDisplay(i);
 
             dojo.connect(itemWidget.domNode, "onclick", function (e) {
+				// CFRICKE: Set title when list item is selected
+                dojo.byId("tdListHeader").innerHTML = "";
+			
                 key = this.getAttribute("key");
                 dojo.byId('divListContainer').style.display = "none";
                 dojo.byId("divRepresentativeDataContainer").style.display = "block";
@@ -1442,6 +1472,9 @@ function CreateListLayOut() {
             });
               dojo.connect(dojo.byId("menuList"), "onclick", function (e) {
               ToggleHeaderIcons(selectedFieldName);
+			  // CFRICKE: Set title back to normal
+              dojo.byId("tdListHeader").innerHTML = "Click Arrow for More Info";
+
 });
             if (listServiceTypesContainer.redrawBorders) {
                 listServiceTypesContainer.redrawBorders();

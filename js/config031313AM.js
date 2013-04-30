@@ -56,13 +56,13 @@ dojo.declare("js.Config", null, {
     // GENERAL SETTINGS
     // ------------------------------------------------------------------------------------------------------------------------
     // Set application title.
-    ApplicationName: "Planning and Zoning Lookup Tool",
+    ApplicationName: "City of New Orleans Planning Viewer",
 
     // Set application window title.
-    ApplicationTitle: "Planning Viewer | City of New Orleans",
+    ApplicationTitle: "NOLA Planning Viewer",
 
     // Set application icon path.
-    ApplicationIcon: "images/fleur_90x90.png",
+    ApplicationIcon: "images/landuse.png",
 	
 	// Show splash screen, true or false
 	ShowSplashScreenMessage: false,
@@ -205,34 +205,34 @@ dojo.declare("js.Config", null, {
       {
 
           ConditionalUse:{
-              Name: "Conditional Use/Exceptional Use/Planned Development",
-              Image:"images/fleur_45x45.png",
+              Name: "Conditional Use",
+              Image:"images/landuse.png",
               HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/3",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
               FieldNames:[
   				  {Field: "<span style='font-style:italic; color:#FF0'>A land-use that is allowed to operate subject to design and/or operational requirements thru a review and approval process.</span>"},
-                  {Field: "<b class='strong'>Zoning Action Type:</b> ${ZONECLASS}"},
-                  {Field: "<b class='strong'>Zone Description:</b> ${ZONEDESC}"},
-				  {Field: "<b class='strong'>Zoning Docket Number:</b> ${ZONENUM}"},
-				  {Field: "<b class='strong'>Zoning Docket Year:</b> ${ZONEYEAR}"},
-				  {Field: "<b class='strong'>Ordinance Number:</b> ${ORDNUM}", Type: "Numeric"},
-				  {Field: "<b class='strong'>Instrument Number:</b> ${RECNUM}"},
-				  //{Field: "<b class='strong'>Zone Class 1:</b> ${ZONECLASS1}"},
-                  //{Field: "<b class='strong'>Zone Num 1:</b> ${ZONENUM1}"},
-				  //{Field: "<b class='strong'>Zone Year 1:</b> ${ZONEYEAR1}"},
-				  //{Field: "<b class='strong'>Ordinance Number 1:</b> ${ORDNUM1}", Type: "Numeric"},
-				  //{Field: "<b class='strong'>Zone Class 2:</b> ${ZONECLASS2}"},
-                  //{Field: "<b class='strong'>Zone Num 2:</b> ${ZONENUM2}"},
-				  //{Field: "<b class='strong'>Ordinance Number 2:</b> ${ORDNUM2}", Type: "Numeric"},
-				  //{Field: "<b class='strong'>Zone Class 3:</b> ${ZONECLASS3}"},
-                  //{Field: "<b class='strong'>Zone Num 3:</b> ${ZONENUM3}"},
-				  //{Field: "<b class='strong'>Ordinance Number 3:</b> ${ORDNUM3}", Type: "Numeric"},
-				  //{Field: "<b class='strong'>Zone Class 4:</b> ${ZONECLASS4}"},
-                  //{Field: "<b class='strong'>Zone Num 4:</b> ${ZONENUM4}"},
-				  //{Field: "<b class='strong'>Ordinance Number 4:</b> ${ORDNUM4}", Type: "Numeric"},
-                  //{Field: "<b class='strong'>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
-{Field: "<span style='font-style:italic; color:#FF0'>Some ordinances may be found by accessing <a href='${HYPERLINK}' target='_blank'>Municode.</a>  All ordinances are available from the Clerk of Council’s office in City Hall.</span>"}//,
-//{Field: "<a href='${HYPERLINK}' target='_blank'>Visit this website for additional information</a>"}
+                  {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
+                  {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+				  {Field: "<b>Zone Number:</b> ${ZONENUM}"},
+				  {Field: "<b>Zone Year:</b> ${ZONEYEAR}"},
+				  {Field: "<b>Ordinance Number:</b> ${ORDNUM}", Type: "Numeric"},
+				  {Field: "<b>Record Number:</b> ${RECNUM}"},
+				  {Field: "<b>Zone Class 1:</b> ${ZONECLASS1}"},
+                  {Field: "<b>Zone Num 1:</b> ${ZONENUM1}"},
+				  {Field: "<b>Zone Year 1:</b> ${ZONEYEAR1}"},
+				  {Field: "<b>Ordinance Number 1:</b> ${ORDNUM1}", Type: "Numeric"},
+				  {Field: "<b>Zone Class 2:</b> ${ZONECLASS2}"},
+                  {Field: "<b>Zone Num 2:</b> ${ZONENUM2}"},
+				  {Field: "<b>Ordinance Number 2:</b> ${ORDNUM2}", Type: "Numeric"},
+				  {Field: "<b>Zone Class 3:</b> ${ZONECLASS3}"},
+                  {Field: "<b>Zone Num 3:</b> ${ZONENUM3}"},
+				  {Field: "<b>Ordinance Number 3:</b> ${ORDNUM3}", Type: "Numeric"},
+				  {Field: "<b>Zone Class 4:</b> ${ZONECLASS4}"},
+                  {Field: "<b>Zone Num 4:</b> ${ZONENUM4}"},
+				  {Field: "<b>Ordinance Number 4:</b> ${ORDNUM4}", Type: "Numeric"},
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
+{Field: "<span style='font-style:italic; color:#FF0'>Some ordinance(s) may be found by accessing this website.  All ordinances are available from the Clerk of Council’s office in City Hall.</span>"},				  
+{Field: "<a href='${HYPERLINK}' target='_blank'>Visit this website for additional information</a>"}
 
              ],
               Color: "#FCD208",
@@ -242,49 +242,15 @@ dojo.declare("js.Config", null, {
 
           Zoning:{
               Name: "Zoning",
-              Image:"images/fleur_45x45.png",
+              Image:"images/landuse.png",
               HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/4",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/1",
               FieldNames:[
 			  
-                  {Field: "<b class='strong'>Zoning District:</b> ${ZONECLASS}"},
-                  {Field: "<b class='strong'>Zoning Description:</b> ${ZONEDESC}"},
-                  {Field: "<b class='strong'>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
-				  {Field: "<a href='${HYPERLINK}' target='_blank'>Visit the City Planning Commission's website for Zoning ordinance articles</a>"}
-              ],
-           Color: "#FCD208",
-           isRendererColor: true,
-           LayerVisibility: true
-          },
-
-          Overlay:{
-              Name: "Overlay",
-              Image:"images/fleur_45x45.png",
-              HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/5",
-              FieldNames:[
-			  
-                  {Field: "<b class='strong'>Docket 1:</b> ${DOCKET_1}"},
-                  {Field: "<b class='strong'>Ordinance 1:</b> ${ORDINANCE_1}"},
-                  {Field: "<b class='strong'>Zoning Description 1:</b> ${DESCRIPTION_1}"},
-                  {Field: "<a href='${WEBLINK_1}' target='_blank'>Visit the City Planning Commission's website for Overlay 1.</a>"},
-                  
-                  {Field: "<b class='strong'>Docket 2:</b> ${DOCKET_2}"},
-                  {Field: "<b class='strong'>Ordinance 2:</b> ${ORDINANCE_2}"},
-                  {Field: "<b class='strong'>Zoning Description 2:</b> ${DESCRIPTION_2}"},
-                  {Field: "<a href='${WEBLINK_2}' target='_blank'>Visit the City Planning Commission's website for Overlay 2.</a>"},
-
-                  {Field: "<b class='strong'>Docket 3:</b> ${DOCKET_3}"},
-                  {Field: "<b class='strong'>Ordinance 3:</b> ${ORDINANCE_3}"},
-                  {Field: "<b class='strong'>Zoning Description 3:</b> ${DESCRIPTION_3}"},
-                  {Field: "<a href='${WEBLINK_3}' target='_blank'>Visit the City Planning Commission's website for Overlay 3.</a>"},
-                  
-                  {Field: "<b class='strong'>Docket 4:</b> ${DOCKET_4}"},
-                  {Field: "<b class='strong'>Ordinance 4:</b> ${ORDINANCE_4}"},
-                  {Field: "<b class='strong'>Zoning Description 4:</b> ${DESCRIPTION_4}"},
-                  {Field: "<a href='${WEBLINK_4}' target='_blank'>Visit the City Planning Commission's website for Overlay 4.</a>"}
-
-
+                  {Field: "<b>Zone Class:</b> ${ZONECLASS}"},
+                  {Field: "<b>Zone Description:</b> ${ZONEDESC}"},
+                  {Field: "<b>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
+				  {Field: "<a href='${HYPERLINK}' target='_blank'>Visit this website for additional information</a>"}
               ],
            Color: "#FCD208",
            isRendererColor: true,
@@ -343,6 +309,22 @@ dojo.declare("js.Config", null, {
             },
 			*/
 			{
+				Key: "zoning",
+				Title: "Zoning",
+				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/1",
+				isVisible: false,
+				isDynamicMapService: true,
+				opacity:.75,
+				Fields:[]
+			},{
+				Key: "conditionalUse",
+				Title: "Conditional use",
+				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/0",
+				isVisible: false,
+				isDynamicMapService: true,
+				opacity:1,
+				Fields:[]
+			},{
 				Key: "lot",
 				Title: "Lot",
 				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/LandBaseServices/MapServer/1",
@@ -358,30 +340,6 @@ dojo.declare("js.Config", null, {
 				isDynamicMapService: true,
 				opacity:.75,
 				Fields: []
-			},{
-				Key: "zoning",
-				Title: "Zoning",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/4",
-				isVisible: false,
-				isDynamicMapService: true,
-				opacity:.35,
-				Fields:[]
-			},{
-				Key: "conditionalUse",
-				Title: "CU/EU/Planned Dev",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/3",
-				isVisible: false,
-				isDynamicMapService: true,
-				opacity:1,
-				Fields:[]
-			},{
-				Key: "overlays",
-				Title: "Overlays",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/5",
-				isVisible: false,
-				isDynamicMapService: true,
-				opacity:1,
-				Fields:[]
 			}
 
     ]

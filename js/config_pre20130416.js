@@ -208,7 +208,7 @@ dojo.declare("js.Config", null, {
               Name: "Conditional Use/Exceptional Use/Planned Development",
               Image:"images/fleur_45x45.png",
               HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/3",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/3",
               FieldNames:[
   				  {Field: "<span style='font-style:italic; color:#FF0'>A land-use that is allowed to operate subject to design and/or operational requirements thru a review and approval process.</span>"},
                   {Field: "<b class='strong'>Zoning Action Type:</b> ${ZONECLASS}"},
@@ -244,47 +244,13 @@ dojo.declare("js.Config", null, {
               Name: "Zoning",
               Image:"images/fleur_45x45.png",
               HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/4",
+              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/4",
               FieldNames:[
 			  
                   {Field: "<b class='strong'>Zoning District:</b> ${ZONECLASS}"},
                   {Field: "<b class='strong'>Zoning Description:</b> ${ZONEDESC}"},
                   {Field: "<b class='strong'>Last Updated:</b> ${LASTUPDATE}", Type: "Date"},
 				  {Field: "<a href='${HYPERLINK}' target='_blank'>Visit the City Planning Commission's website for Zoning ordinance articles</a>"}
-              ],
-           Color: "#FCD208",
-           isRendererColor: true,
-           LayerVisibility: true
-          },
-
-          Overlay:{
-              Name: "Overlay",
-              Image:"images/fleur_45x45.png",
-              HasRendererImage:false,
-              ServiceUrl:"http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/5",
-              FieldNames:[
-			  
-                  {Field: "<b class='strong'>Docket 1:</b> ${DOCKET_1}"},
-                  {Field: "<b class='strong'>Ordinance 1:</b> ${ORDINANCE_1}"},
-                  {Field: "<b class='strong'>Zoning Description 1:</b> ${DESCRIPTION_1}"},
-                  {Field: "<a href='${WEBLINK_1}' target='_blank'>Visit the City Planning Commission's website for Overlay 1.</a>"},
-                  
-                  {Field: "<b class='strong'>Docket 2:</b> ${DOCKET_2}"},
-                  {Field: "<b class='strong'>Ordinance 2:</b> ${ORDINANCE_2}"},
-                  {Field: "<b class='strong'>Zoning Description 2:</b> ${DESCRIPTION_2}"},
-                  {Field: "<a href='${WEBLINK_2}' target='_blank'>Visit the City Planning Commission's website for Overlay 2.</a>"},
-
-                  {Field: "<b class='strong'>Docket 3:</b> ${DOCKET_3}"},
-                  {Field: "<b class='strong'>Ordinance 3:</b> ${ORDINANCE_3}"},
-                  {Field: "<b class='strong'>Zoning Description 3:</b> ${DESCRIPTION_3}"},
-                  {Field: "<a href='${WEBLINK_3}' target='_blank'>Visit the City Planning Commission's website for Overlay 3.</a>"},
-                  
-                  {Field: "<b class='strong'>Docket 4:</b> ${DOCKET_4}"},
-                  {Field: "<b class='strong'>Ordinance 4:</b> ${ORDINANCE_4}"},
-                  {Field: "<b class='strong'>Zoning Description 4:</b> ${DESCRIPTION_4}"},
-                  {Field: "<a href='${WEBLINK_4}' target='_blank'>Visit the City Planning Commission's website for Overlay 4.</a>"}
-
-
               ],
            Color: "#FCD208",
            isRendererColor: true,
@@ -361,7 +327,7 @@ dojo.declare("js.Config", null, {
 			},{
 				Key: "zoning",
 				Title: "Zoning",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/4",
+				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/4",
 				isVisible: false,
 				isDynamicMapService: true,
 				opacity:.35,
@@ -369,15 +335,7 @@ dojo.declare("js.Config", null, {
 			},{
 				Key: "conditionalUse",
 				Title: "CU/EU/Planned Dev",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/3",
-				isVisible: false,
-				isDynamicMapService: true,
-				opacity:1,
-				Fields:[]
-			},{
-				Key: "overlays",
-				Title: "Overlays",
-				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/Staging/Planning/MapServer/5",
+				ServiceURL: "http://gis.nola.gov/arcgis/rest/services/GovernmentServices/PlanningServices/MapServer/3",
 				isVisible: false,
 				isDynamicMapService: true,
 				opacity:1,

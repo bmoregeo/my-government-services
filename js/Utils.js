@@ -68,9 +68,11 @@ function ShowMyLocation() {
 		    graphicCollection.addPoint(mapPoint);
 		    geometryService.project([graphicCollection], map.spatialReference, function (newPointCollection) {
 		        for (var bMap = 0; bMap < baseMapLayers.length; bMap++) {
-		            if (map.getLayer(baseMapLayers[bMap].Key).visible) {
-		                var bmap = baseMapLayers[bMap].Key;
-		            }
+		            for (var z = 0; z < baseMapLayers[bMap].MapURL.length; z++) {
+						if (map.getLayer(baseMapLayers[bMap].Key + z).visible) {
+							var bmap = baseMapLayers[bMap].Key + z;
+						}
+				}
 		        }
 		        if (!map.getLayer(bmap).fullExtent.contains(newPointCollection[0].getPoint(0))) {
 
@@ -826,7 +828,7 @@ function ShowOperationalLayers() {
         dojo.byId("divOperationalLayerContainer").style.height = "0px";
     }
     else {
-        dojo.byId('divOperationalLayerContainer').style.height = Math.ceil(baseMapLayers.length / 2) * (dojo.coords("divOperationalLayerHolder").h) + ((isTablet) ? 10 : 8) + "px";
+        dojo.byId('divOperationalLayerContainer').style.height = Math.ceil(5 / 2) * (dojo.coords("divOperationalLayerHolder").h) + ((isTablet) ? 10 : 8) + "px";
         dojo.replaceClass("divOperationalLayerContainer", "showContainerHeight", "hideContainerHeight");
     }
 }

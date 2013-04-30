@@ -20,12 +20,12 @@
     -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
-    <link rel="shortcut icon" href="images/fevicon.ico" />
+    <link rel="shortcut icon" href="images/fleur.ico" />
     <link rel="apple-touch-icon" href="images/appIcon.png" />
     <link id="stylesheet"
           href='http://serverapi.arcgisonline.com/jsapi/arcgis/3.1/js/dojo/dojox/mobile/themes/iPhone/iPhone.css'
           rel='stylesheet' />
-    <link href="styles/myGovServices.css" rel="stylesheet" type="text/css" />
+    <link href="styles/myGovServices.css?v=0.2" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" id="dynamicStyleSheet" />
     <script type="text/javascript">
         var dojoConfig = {
@@ -109,25 +109,26 @@
                     <table>
                         <tr>
                             <td align="center" id="Td1" class="tdHeader">
-                                <img alt="Settings" src="images/locate.png" class="imgOptions" title="Search" onclick="ShowLocateContainer();"
+                                <img alt="Settings" src="images/imgLocateLabel.png" class="imgOptions" title="Search" onclick="ShowLocateContainer();"
                                     style="cursor: pointer" />
                             </td>
-                            <td align="center" id="tdGeolocation" class="tdHeader">
-                                <img alt="Settings" src="images/imgGeolocation.png" class="imgOptions" title="Locate"
+                            <td align="center" id="tdGeolocation"> </td>
+							<!-- <td align="center" id="tdGeolocation" class="tdHeader">
+                                <img alt="Settings" src="images/imgGeolocateLabel.png" class="imgOptions" title="Locate"
                                     onclick="ShowMyLocation();" style="cursor: pointer" />
-                            </td>
-                            <td align="center" id="tdOperationalLayers" class="tdHeader">
+                            </td>-->
+                            <!--<td align="center" id="tdOperationalLayers" class="tdHeader">
                                 <img alt="Layer" src="images/menu.png" class="imgOptions" title="Layer"
                                      onclick="ShowOperationalLayers();" style="cursor: pointer" />
-                            </td>
-                            <td align="center" id="tdBaseMap">
-                            </td>
-                            <td align="center" class="tdHeader">
-                                <img src="images/imgSocialMedia.png" class="imgOptions" title="Share" onclick="ShareLink(true);"
+                            </td>-->
+                            <td align="center" id="tdOperationalLayers"></td>
+                            <td align="center" id="tdBaseMap"></td>
+                            <!--<td align="center" class="tdHeader">
+                                <img src="images/imgShareLabel.png" class="imgOptions" title="Share" onclick="ShareLink(true);"
                                     style="cursor: pointer" />
-                            </td>
+                            </td>-->
                             <td align="center" id="help" class="tdHeader">
-                                <img src="images/help.png" title="Help" id="imgHelp" class="imgOptions" style="cursor: pointer" />
+                                <img src="images/imgHelpLabel.png" title="Help" id="imgHelp" class="imgOptions" style="cursor: pointer" />
                             </td>
                         </tr>
                     </table>
@@ -300,34 +301,30 @@
                     <div id="divMobileContainerDetails" class="hideContainer divMobileContainerDetails">
                         <table class="tblHeader" style="width: 100%;">
                             <tr style="height: 30px;" align="center" valign="top">
-                                <td id="tdListHeader" class="tdHeader" align="left" valign="middle" style="width: 90%">
-                                </td>
+                                <td id="tdListHeader" class="tdHeader" align="left" valign="middle" style="width: 90%"></td>
                                 <td style="width: 10%">
-                                <table cellpadding="0" cellspacing="0">
-                                <tr>
-                                <td align="right">
-                                    <img id="menuList" src="images/menu.png" class="imgOptions" title="List" style="cursor: pointer;
-                                        display: none;" />
-                                </td>
-                                <td align="right">
-                                    <img id="pointMenuList" src="images/menu.png" class="imgOptions" title="List" style="cursor: pointer;
-                                        display: none;" />
-                                </td>
-                                <td align="right">
-                                    <img id="goBack" src="images/goBack.png" class="imgOptions" title="Back" style="cursor: pointer;
-                                        display: none;" />
-                                </td>
-                                <td align="right">
-                                    <img id="getDirection" src="images/getDirection.png" title="Get directions" class="imgOptions"
-                                        style="cursor: pointer; display: none;" />
-                                </td>
-                                <td align="right">
-                                    <img src="images/close.png" class="imgOptions" title="Close" style="cursor: pointer;"
-                                        onclick="HideMainContainer();" />
-                                </td>
-                                </tr></table></td>
-                            </tr>
-                        </table>
+									<table cellpadding="0" cellspacing="0">
+										<tr>
+											<td align="right">
+												<img id="menuList" src="images/menu.png" class="imgOptions" title="List" style="cursor: pointer; display: none;" />
+											</td>
+											<td align="right">
+												<img id="pointMenuList" src="images/menu.png" class="imgOptions" title="List" style="cursor: pointer; display: none;" />
+											</td>
+											<td align="right">
+												<img id="goBack" src="images/goBack.png" class="imgOptions" title="Back" style="cursor: pointer; display: none;" />
+											</td>
+											<td align="right">
+												<img id="getDirection" src="images/getDirection.png" title="Get directions" class="imgOptions" style="cursor: pointer; display: none;" />
+											</td>
+											<td align="right">
+												<img src="images/close.png" class="imgOptions" title="Close" style="cursor: pointer;" onclick="HideMainContainer();" />
+											</td>
+										</tr>
+								</table>
+							</td>
+                           </tr>
+						</table>
                         <div id="divListContainer">
                             <div id="divDataListContainer" class="divDataListContainer">
                                 <div id="divDataListContent" class="divDataListContent">
@@ -344,5 +341,17 @@
             </tr>
         </table>
     </div>
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-18797759-3']);
+	  _gaq.push(['_setDomainName', 'nola.gov']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
 </body>
 </html>

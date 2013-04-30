@@ -38,27 +38,36 @@
 </head>
 <body>
  	<div class="Help" id="Help" style="Z-INDEX: 1000; LEFT: 5%; OVERFLOW: visible; WIDTH: 90%; POSITION: absolute; TOP: 20px; HEIGHT: 500px">
-	    <img src=images/appIcon.png width="75" height="75" />
+	    <!--<img src=images/appIcon.png width="75" height="75" />-->
         <h1>Online Help:</h1>
-	    <p>The <b>My Government Services</b> application helps residents locate a government facility and obtain information about curbside and dropoff services provided by a government agency. It is typically used by residents in a community, but can be used by visitors to locate a library or post office near them. My Government Services is a single application that can be deployed by local governments and used by citizens on a desktop PC, mobile phone, and tablet device.</p>
-	    <h4><u>Using the Application</u></h4>
-	    <p>The My Government Services application offers a simple way for residents to locate a government facility and information about curbside and dropoff services. When a resident finds their address or uses their current location, the application will identify the appropriate service districts and closest government facilities. In addition, relevant information about that service or facility will be presented in a series of tabs at the bottom of the application.  </p>
+	    <p>The <b>City of New Orleans Planning and Zoning Lookup Tool</b> helps residents identify Zoning and Conditional Use information.  This application can be used on a  desktop computer, mobile phone, or tablet device.</p>
+	    <!--<h4><u>Using the Application</u></h4>
+	    <p>The Planning Viewer application offers a simple way for residents to locate a government facility and information about curbside and dropoff services. When a resident finds their address or uses their current location, the application will identify the appropriate service districts and closest government facilities. In addition, relevant information about that service or facility will be presented in a series of tabs at the bottom of the application.  </p> -->
         <h4><u>Finding an Area of Interest</u></h4>
-        <p>There are three primary ways to identify an area of interest. You can interact directly with the map and click on a address when you've located it. You can also use your current location or finally search for an address to find services and facilities.</p>
+        <p>There are three primary ways to identify an area of interest: <br />1. Search by address. <br /> 2. You can use your current location <img src=images/imgGeolocation.png width="25" height="25" /> if this funciionality is enabled on your mobile device. <br /> 3. You can interact directly with the map and click anywhere withinin Orleans Parish for information. </p>
         <h4><u>Map Based Navigation</u></h4>
         <p>There are several ways to interact with the map:<br /><br />1. Use the basemap switcher to select the basemap you'd like to interact with<br />2. Hold down the shift key and drag a box on the map to zoom in<br />3. Hold Down Ctrl+Shift to zoom out<br />4. Roll your mouse roller to zoom in/out<br />5. Drag the zoom slider to zoom in/out</p>
-        <h4><u>Searching</u></h4>
-        <p>The search box can be used to find an address:<br /><br />1. Enter the address you're interested in<br />2. Click on the item in the list to locate the address on the map</p>
-        <h4><u>Government Service and Facility Information</u></h4>
-        <p>After searching for a respective address, relevant government service and facility information will be presented in the bottom of the application. In the tab, you'll find the following information for curbside services:<br /><br />1. The day the service is provided<br />2. The agency who provides the service<br />3. Contact information<br /><br />In addition, you'll also find a list of the closest government facilities and directions to each.<br /></p>
-        <h4><u>Directions</u></h4>
-        <p>You can also get directions to each facility using your current location or an address you select. When you find a government facility you'd like to visit, click the Direction button, to calculate the directions and route.</p>
-        <h4><u>Share Your Map</u></h4>
-        <p>You can click on the Share Map button to share your map several different ways.  You can compose an email, post to your Facebook wall or post a Tweet. When you use the Facebook or Twitter links, you'll be asked to sign in to your respective account.</p>
+        <h4><u>Searching by Address</u></h4>
+		
+        <p>The search box <img src=images/locate.png width="25" height="25" /> can be used to find an address:<br /><br />1. Enter the address you're interested in<br />2. Click on the item in the list to locate the address on the map</p>
+        <h4><u>Zoning and Conditional Use Information</u></h4>
+        <p>After searching for a respective address or clicking on the map, relevant Zoning and Conditional Use (if applicable) will be presented in the bottom of the application. <!-- In the tab, you'll find the following information for curbside services:<br /><br />1. The day the service is provided<br />2. The agency who provides the service<br />3. Contact information<br /><br />In addition, you'll also find a list of the closest government facilities and directions to each.<br /></p> -->
+		
+		<h4><u>Map Layers</u></h4>
+		You can toggle certain Enterprise GIS Map Layers on or off by opening the <img src=images/menu.png width="25" height="25" /> Layer control.  These layers are turned off by default, but can be turned on when the map is zoomed into to prescribed zoom scales.
+        
+		<h4><u>Legal</u></h4>
+		<p>This information is derived from the City of New Orleans Enterprise GIS Database. The data are not a survey-quality product and the end user assumes the risk of using this information. The City of New Orleans does not assume any liability for damages arising from errors, omissions, or use of this information. The City of New Orleans is not responsible for and does not warrant the published accuracy, date and currency, compilation methods, and cartographic format as described in the accompanying metadata, and end users are advised to utilize these data accordingly.</p>
+		
+		<!-- <h4><u>Directions</u></h4>
+        <p>You can also get directions to each facility using your current location or an address you select. When you find a government facility you'd like to visit, click the Direction button, to calculate the directions and route.</p> 
+        <h4><u>Share Your Map</u></h4> -->
+		
+        <!-- <p>You can click on the Share Map button to share your map several different ways.  You can compose an email, post to your Facebook wall or post a Tweet. When you use the Facebook or Twitter links, you'll be asked to sign in to your respective account.</p> 
         <h4><u>More Information</u></h4>
-        <p>The <b>My Government Services</b> application can used by public works departments, water utilities, public safety agencies, planning departments, or other local government organizations responsible for delivering curbside services and information to the general public. This application provides 24x7 access to the organization and typically supplements customer service phone numbers staffed by these organizations.<br /><br />Please visit Esri's ArcGIS for Local Government Resource Center for additional information.<br/></p>
-        <h4><u>Browser Compatibility</u></h4>
-        <p>My Government Services is supported on the following browsers: Microsoft IE 7/8/9, Mozilla Firefox, Google Chrome, Apple Safari, iOS Safari 4.0+, and Android Chrome 2.3+.<br /><br /></p>
+        <p>The <b>Planning Viewer</b> application can used by public works departments, water utilities, public safety agencies, planning departments, or other local government organizations responsible for delivering curbside services and information to the general public. This application provides 24x7 access to the organization and typically supplements customer service phone numbers staffed by these organizations.<br /><br />Please visit Esri's ArcGIS for Local Government Resource Center for additional information.<br/></p>
+        <h4><u>Browser Compatibility</u></h4> -->
+        <p>This app is supported on the following browsers: Microsoft IE 7/8/9, Mozilla Firefox, Google Chrome, Apple Safari, iOS Safari 4.0+, and Android Chrome 2.3+.<br /><br /></p>
     </div>
 </body>
 </html>

@@ -42,8 +42,8 @@ body, html
 
 .imgOptions
 {
-	height: 30px !important;
-	width: 30px !important;
+	height: 50px !important;
+	width: 50px !important;
 	vertical-align: middle;
 	padding: 0px 0px 0px 0px;
 	cursor: pointer;
@@ -127,8 +127,8 @@ body, html
 /* bottom panel css*/
 .transparentBackground
 {
-	background: rgba(0,0,0,0.9);
-	-pie-background: rgba(0,0,0,0.9);
+	background: rgba(3,34,70,0.7);
+    -pie-background: rgba(3,34,70,0.7);
 	behavior: url("styles/PIE.htc");
 	vertical-align: middle;
 }
@@ -148,8 +148,11 @@ body, html
 
 .imgCarouselHeader
 {
-	height: 30px !important;
-	width: 30px !important;
+	/* change by EO */
+	height: 45px !important;
+	width: 45px !important;
+	padding-right:2px;
+	/* end change */
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
